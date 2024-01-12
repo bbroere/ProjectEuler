@@ -1,4 +1,4 @@
-export {}
+export {};
 
 function run(): void {
     // possible improvement: fib sequence is (odd - odd - even) repeated
@@ -6,12 +6,12 @@ function run(): void {
     let f2: number = 1;
     let sum: number = 0;
     while (f1 + f2 <= 4000000) {
-        const next = f1 + f2
+        const next = f1 + f2;
         if (next % 2 == 0) {
-            sum += next
+            sum += next;
         }
-        f1 = f2
-        f2 = next
+        f1 = f2;
+        f2 = next;
     }
-    console.log(sum)
+    console.log(sum);
 }
