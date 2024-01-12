@@ -3,7 +3,8 @@
   "version": "0.0.0",
   "scripts": {
     "lint": "tslint -p tsconfig.json '**/*.ts'",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "start": "npx tsc && node dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
