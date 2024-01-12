@@ -2,7 +2,7 @@
   "name": "projecteuler",
   "version": "0.0.0",
   "scripts": {
-    "lint": "tslint -p tsconfig.json '**/*.ts'",
+    "lint": "npx eslint .",
     "lint:fix": "npm run lint -- --fix",
     "start": "npx tsc && node dist/index.js"
   },
