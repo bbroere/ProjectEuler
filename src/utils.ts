@@ -64,3 +64,10 @@ export function nofFactors(n: number): number {
     // If n = a^x*b^y*c^z.... then number of factors (including 1) is (x+1)(y+1)(z+1)...
     return [...res.values()].reduce((c, n) => c * (n + 1), 1);
 }
+
+/**
+ * Filters all duplicates
+ */
+export function filterListUnique<T>(l: T[]): T[] {
+    return l.filter((v, i, a) => a.indexOf(v) === i);
+}

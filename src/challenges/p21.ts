@@ -1,3 +1,5 @@
+import {filterListUnique} from "../utils";
+
 function sumOfFactors(n: number): number {
     // A bit simple, but at this scale it works fine
     let res: number = 0;
@@ -23,5 +25,5 @@ export function run(): void {
             amics.push(i, dMap.get(i));
         }
     }
-    console.log(amics.filter((v, i, a) => a.indexOf(v) === i).reduce((c, n) => c + n, 0));
+    console.log(filterListUnique(amics).reduce((c, n) => c + n, 0));
 }
