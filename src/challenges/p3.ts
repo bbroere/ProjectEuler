@@ -1,6 +1,4 @@
-export {};
-
-function run(): void {
+export function run(): void {
     // let's start simple, when we find a factor, divide it out and break if need be
     let original: number = 600851475143;
     let c: number = 2;

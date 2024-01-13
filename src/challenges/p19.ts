@@ -1,6 +1,4 @@
-export {};
-
-function run(): void {
+export function run(): void {
     const startDate = new Date(1901, 0, 1, 1);
     const endDate = new Date(2000, 11, 31, 1);
     let currentDate = new Date(startDate);

@@ -1,11 +1,9 @@
-export {};
-
 function checkTriple(a: number, b: number): boolean {
     const c = Math.sqrt(a * a + b * b);
     return Math.floor(c) == c;
 }
 
-function run(): void {
+export function run(): void {
     // The numbers aren't that big, so a straightforward approach should work
     let currentSum = 0;
     let currentProduct = 0;

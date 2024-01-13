@@ -2,15 +2,17 @@
   "name": "projecteuler",
   "version": "0.0.0",
   "scripts": {
+    "prep": "ts-node -O '{\"module\": \"commonjs\"}' prep.ts",
     "lint": "npx eslint .",
     "lint:fix": "npm run lint -- --fix",
-    "start": "npx tsc && node dist/index.js"
+    "start": "npm run prep && npx tsc && node dist/index.js"
   },
   "devDependencies": {
     "@types/node": "^20.11.0",
     "@typescript-eslint/eslint-plugin": "^6.18.1",
     "@typescript-eslint/parser": "^6.18.1",
     "eslint": "^8.56.0",
+    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }

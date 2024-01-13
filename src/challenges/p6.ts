@@ -1,6 +1,4 @@
-export {};
-
-function run(): void {
+export function run(): void {
     let sum = 0;
     let sq_sum = 0;
     for (let i = 1; i < 101; i++) {

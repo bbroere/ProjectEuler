@@ -1,5 +1,3 @@
-export {};
-
 function nofFactors(n: number): number {
     const res: Map<number, number> = new Map<number, number>();
     let remainder: number = n;
@@ -20,7 +18,7 @@ function nofFactors(n: number): number {
     return [...res.values()].reduce((c, n) => c * (n + 1), 1);
 }
 
-function run(): void {
+export function run(): void {
     let index: number = 1;
     let latest: number = index;
     while (nofFactors(latest) <= 500) {

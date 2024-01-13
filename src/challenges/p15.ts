@@ -1,6 +1,4 @@
-export {};
-
-function run(): void {
+export function run(): void {
     // This is just the binomial coefficient ((2 * 20) 20)
     // This equals:
     // (40 * 39 * 38 * ... * 21) / (20 * 19 * ... * 1)

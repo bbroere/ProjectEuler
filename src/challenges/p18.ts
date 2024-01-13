@@ -1,5 +1,3 @@
-export {};
-
 const input: string = "75\n" +
     "95 64\n" +
     "17 47 82\n" +
@@ -32,7 +30,7 @@ function findLongestPathSum(triangle: number[][]): number {
     }
 }
 
-function run(): void {
+export function run(): void {
     const triangle: number[][] = input.split("\n").map(t => t.split(" ").map(Number));
     console.log(findLongestPathSum(triangle));
 }

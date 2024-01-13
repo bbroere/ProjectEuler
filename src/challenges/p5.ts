@@ -1,5 +1,3 @@
-export {};
-
 function lcm(a: number, b: number): number {
     let a_r: number = a;
     let b_r: number = b;
@@ -13,7 +11,7 @@ function lcm(a: number, b: number): number {
     return a_r;
 }
 
-function run(): void {
+export function run(): void {
     // This is simply the lcm of all numbers
     let res: number = 1;
     for (let i = 2; i < 21; i++) {

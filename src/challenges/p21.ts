@@ -1,5 +1,3 @@
-export {};
-
 function sumOfFactors(n: number): number {
     // A bit simple, but at this scale it works fine
     let res: number = 0;
@@ -11,7 +9,7 @@ function sumOfFactors(n: number): number {
     return res;
 }
 
-function run(): void {
+export function run(): void {
     const dMap: Map<number, number> = new Map<number, number>();
     const amics: number[] = [];
     for (let i = 2; i < 10000; i++) {

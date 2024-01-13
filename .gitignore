@@ -1,3 +1,6 @@
 # compiled code
 **/dist
 **/node_modules
+
+# run file
+src/run.ts

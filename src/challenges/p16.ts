@@ -1,6 +1,4 @@
-export {};
-
-function run(): void {
+export function run(): void {
     console.log(
         BigInt(Math.pow(2, 1000))
             .toString()

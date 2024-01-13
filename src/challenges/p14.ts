@@ -1,5 +1,3 @@
-export {};
-
 function collatzStep(n: number): number {
     if (n % 2 == 0) {
         return n / 2;
@@ -7,7 +5,7 @@ function collatzStep(n: number): number {
     return 3 * n + 1;
 }
 
-function run(): void {
+export function run(): void {
     const chainLengths: Map<number, number> = new Map<number, number>();
     for (let i = 1; i < 1000000; i++) {
         let current = i;

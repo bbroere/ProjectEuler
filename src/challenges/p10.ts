@@ -1,7 +1,4 @@
-export {};
-
-
-function run(): void {
+export function run(): void {
     // The numbers are getting a bit bigger so brute forcing this will already take some time
     // So let's be a bit smarter
     // We can easily handle arrays of length 2000000, so do it that way

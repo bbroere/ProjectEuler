@@ -1,6 +1,4 @@
-export {};
-
-function run(): void {
+export function run(): void {
     // possible improvement: fib sequence is (odd - odd - even) repeated
     let f1: number = 1;
     let f2: number = 1;
