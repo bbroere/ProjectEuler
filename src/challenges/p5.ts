@@ -1,15 +1,4 @@
-function lcm(a: number, b: number): number {
-    let a_r: number = a;
-    let b_r: number = b;
-    while (a_r != b_r) {
-        if (a_r < b_r) {
-            a_r += a;
-        } else {
-            b_r += b;
-        }
-    }
-    return a_r;
-}
+import {lcm} from "../utils";
 
 export function run(): void {
     // This is simply the lcm of all numbers

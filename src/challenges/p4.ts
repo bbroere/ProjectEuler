@@ -1,6 +1,4 @@
-function checkPalindrome(n: number): boolean {
-    return `${n}` === `${n}`.split("").reverse().join("");
-}
+import {checkPalindrome} from "../utils";
 
 export function run(): void {
     // Not the best way to do this but on this scale it's fine
