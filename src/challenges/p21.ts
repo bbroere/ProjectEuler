@@ -1,15 +1,4 @@
-import {filterListUnique} from "../utils";
-
-function sumOfFactors(n: number): number {
-    // A bit simple, but at this scale it works fine
-    let res: number = 0;
-    for (let i: number = 1; i < n; i++) {
-        if (n % i == 0) {
-            res += i;
-        }
-    }
-    return res;
-}
+import {filterListUnique, sumOfFactors} from "../utils";
 
 export function run(): void {
     const dMap: Map<number, number> = new Map<number, number>();

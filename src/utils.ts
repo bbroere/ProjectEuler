@@ -66,6 +66,19 @@ export function nofFactors(n: number): number {
 }
 
 /**
+ * Sums all the factors of a number
+ */
+export function sumOfFactors(n: number): number {
+    let res: number = 0;
+    for (let i: number = 1; i < n; i++) {
+        if (n % i == 0) {
+            res += i;
+        }
+    }
+    return res;
+}
+
+/**
  * Filters all duplicates
  */
 export function filterListUnique<T>(l: T[]): T[] {
