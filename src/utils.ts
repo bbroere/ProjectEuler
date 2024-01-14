@@ -1,3 +1,5 @@
+import assert from "node:assert";
+
 /**
  * Checks if a number is a palindrome
  */
@@ -83,4 +85,21 @@ export function sumOfFactors(n: number): number {
  */
 export function filterListUnique<T>(l: T[]): T[] {
     return l.filter((v, i, a) => a.indexOf(v) === i);
+}
+
+/**
+ * Recursively creates a list of all permutations of a set of strings
+ */
+export function lexicographicPermutations(l: string[]): string[] {
+    assert(l.length > 0);
+    if (l.length == 1) {
+        return [l[0]];
+    } else {
+        const res = [];
+        for (let i = 0; i < l.length; i++) {
+            const newL = [...l.slice(0, i), ...l.slice(i + 1, l.length)];
+            lexicographicPermutations(newL).map(s => l[i] + s).forEach(t => res.push(t));
+        }
+        return res;
+    }
 }
