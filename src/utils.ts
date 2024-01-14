@@ -103,3 +103,15 @@ export function lexicographicPermutations(l: string[]): string[] {
         return res;
     }
 }
+
+export function fibonacciWithCondition(c: (f: bigint) => boolean): [number, bigint] {
+    let index: number = 2;
+    let f1: bigint = BigInt(1);
+    let f2: bigint = BigInt(1);
+    while (!c(f2)) {
+        index++;
+        f2 = f1 + f2;
+        f1 = f2 - f1;
+    }
+    return [index, f2];
+}
