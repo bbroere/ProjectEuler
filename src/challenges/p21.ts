@@ -1,6 +1,6 @@
 import {filterListUnique, sumOfFactors} from "../utils";
 
-export function run(): void {
+export function run(): number {
     const dMap: Map<number, number> = new Map<number, number>();
     const amics: number[] = [];
     for (let i = 2; i < 10000; i++) {
@@ -14,5 +14,5 @@ export function run(): void {
             amics.push(i, dMap.get(i));
         }
     }
-    console.log(filterListUnique(amics).reduce((c, n) => c + n, 0));
+    return filterListUnique(amics).reduce((c, n) => c + n, 0);
 }

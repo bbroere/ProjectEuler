@@ -1,6 +1,6 @@
 import {checkPrime} from "../utils";
 
-export function run(): void {
+export function run(): number {
     let latestPrime: number = 2;
     let latestPrimeCnt: number = 1;
     for (let i: number = 3; latestPrimeCnt != 10001; i += 2) {
@@ -9,5 +9,5 @@ export function run(): void {
             latestPrimeCnt += 1;
         }
     }
-    console.log(latestPrime);
+    return latestPrime;
 }

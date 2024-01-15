@@ -1,4 +1,4 @@
-export function run(): void {
+export function run(): number {
     const startDate = new Date(1901, 0, 1, 1);
     const endDate = new Date(2000, 11, 31, 1);
     let currentDate = new Date(startDate);
@@ -9,5 +9,5 @@ export function run(): void {
         }
         currentDate = new Date(currentDate.setMonth(currentDate.getMonth() + 1));
     }
-    console.log(res);
+    return res;
 }

@@ -1,4 +1,4 @@
-export function run(): void {
+export function run(): number {
     // possible improvement: fib sequence is (odd - odd - even) repeated
     let f1: number = 1;
     let f2: number = 1;
@@ -11,5 +11,5 @@ export function run(): void {
         f1 = f2;
         f2 = next;
     }
-    console.log(sum);
+    return sum;
 }

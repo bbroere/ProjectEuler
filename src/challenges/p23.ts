@@ -1,6 +1,6 @@
 import {sumOfFactors} from "../utils";
 
-export function run(): void {
+export function run(): number {
     const abundantNumbers: number[] = [];
     // Starting from 12 and stopping at 28123, get all abundant numbers
     for (let i = 1; i <= 28123; i++) {
@@ -17,5 +17,5 @@ export function run(): void {
             numbers[abundantNumbers[i] + abundantNumbers[j]] = 0;
         }
     }
-    console.log(numbers.reduce((c, n) => c + n, 0));
+    return numbers.reduce((c, n) => c + n, 0);
 }

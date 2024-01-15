@@ -5,7 +5,7 @@ function collatzStep(n: number): number {
     return 3 * n + 1;
 }
 
-export function run(): void {
+export function run(): number {
     const chainLengths: Map<number, number> = new Map<number, number>();
     for (let i = 1; i < 1000000; i++) {
         let current = i;
@@ -20,5 +20,5 @@ export function run(): void {
             chainLengths.set(i, length);
         }
     }
-    console.log(Array.from(chainLengths.entries()).reduce((a, b) => a[1] < b[1] ? b : a)[0]);
+    return Array.from(chainLengths.entries()).reduce((a, b) => a[1] < b[1] ? b : a)[0];
 }

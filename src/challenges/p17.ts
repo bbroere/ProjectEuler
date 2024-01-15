@@ -1,4 +1,4 @@
-export function run(): void {
+export function run(): number {
     // Think about how often certain words occur
     // one upto nine: 9 times each in each 100 range, so 10*9=90 times (plus 100 from 3 rows down)
     // ten upto nineteen: once in each 100 range, so 9 times
@@ -17,5 +17,5 @@ export function run(): void {
     res -= 9 * "and".length; // whole hundreds!
     // one thousand
     res += "onethousand".length;
-    console.log(res);
+    return res;
 }

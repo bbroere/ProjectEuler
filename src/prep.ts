@@ -12,7 +12,7 @@ function makeRunFile(): void {
     const casesStrings: string[] = files.map(f => {
         const nmbr: string = f.split(".")[0].slice(1);
         return `        case ${nmbr}:\n` +
-            `            p${nmbr}();\n` +
+            `            console.log(p${nmbr}());\n` +
             '            break;\n';
     });
     content += 'export function runChallenge(challenge: number): void {\n' +
