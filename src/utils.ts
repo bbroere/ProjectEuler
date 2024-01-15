@@ -1,29 +1,6 @@
 import assert from "node:assert";
 
 /**
- * Checks if a number is a palindrome
- */
-export function checkPalindrome(n: number): boolean {
-    return `${n}` === `${n}`.split("").reverse().join("");
-}
-
-/**
- * Calculates LCM of 2 numbers
- */
-export function lcm(a: number, b: number): number {
-    let a_r: number = a;
-    let b_r: number = b;
-    while (a_r != b_r) {
-        if (a_r < b_r) {
-            a_r += a;
-        } else {
-            b_r += b;
-        }
-    }
-    return a_r;
-}
-
-/**
  * Checks if a number is prime
  */
 export function checkPrime(n: number): boolean {

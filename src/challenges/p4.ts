@@ -1,4 +1,4 @@
-import {checkPalindrome} from "../utils";
+import {checkPalindrome} from "../utilities/strings";
 
 export function run(): number {
     // Not the best way to do this but on this scale it's fine

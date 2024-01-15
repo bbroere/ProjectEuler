@@ -1,10 +1,6 @@
-import {lcm} from "../utils";
+import {lcm} from "../utilities/numbers";
 
 export function run(): number {
     // This is simply the lcm of all numbers
-    let res: number = 1;
-    for (let i = 2; i < 21; i++) {
-        res = lcm(res, i);
-    }
-    return res;
+    return lcm(...[...Array(20).keys()].map((t: number) => t + 1));
 }
