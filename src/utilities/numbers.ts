@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import {allDivisors, properDivisors} from "./primes";
+import {properDivisors} from "./primes";
 import {sumWithCondition} from "./sequences";
 
 /**
