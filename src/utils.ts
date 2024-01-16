@@ -1,17 +1,5 @@
 import assert from "node:assert";
 
-/**
- * Checks if a number is prime
- */
-export function checkPrime(n: number): boolean {
-    const limit: number = Math.ceil(n / 2);
-    for (let i = 2; i < limit; i++) {
-        if (n % i == 0) {
-            return false;
-        }
-    }
-    return true;
-}
 
 /**
  * Checks for 2 numbers a and b if sqrt(a^2 + b^2) is an integer
