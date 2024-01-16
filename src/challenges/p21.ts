@@ -1,18 +1,15 @@
-import {filterListUnique, sumOfFactors} from "../utils";
+import {amicableMate} from "../utilities/numbers";
+import {sumWithCondition} from "../utilities/sequences";
 
 export function run(): number {
-    const dMap: Map<number, number> = new Map<number, number>();
-    const amics: number[] = [];
-    for (let i = 2; i < 10000; i++) {
-        if (!dMap.has(i)) {
-            dMap.set(i, sumOfFactors(i));
-        }
-        if (!dMap.has(dMap.get(i))) {
-            dMap.set(dMap.get(i), sumOfFactors(dMap.get(i)));
-        }
-        if (dMap.get(dMap.get(i)) == i && dMap.get(i) != i) {
-            amics.push(i, dMap.get(i));
+    const a: number[] = [];
+    for (let i: number = 2; i < 10000; i++) {
+        if (!a.includes(i)) {
+            const m: number = amicableMate(i);
+            if (m != -1 && i != m) {
+                a.push(i, m);
+            }
         }
     }
-    return filterListUnique(amics).reduce((c, n) => c + n, 0);
+    return sumWithCondition(a);
 }

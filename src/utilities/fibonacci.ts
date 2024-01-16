@@ -19,7 +19,7 @@ export function fibonacciListWithStopCondition(stopCondition: (i: number, f: big
 
 export function fibonacciFirstWithCondition(stopCondition: (i: number, f: bigint) => boolean): [number, bigint] {
     const fibs: [number, bigint][] = fibonacciListWithStopCondition(stopCondition).slice(-2);
-    assert(fibs.length == 2);
+    assert(fibs.length == 2, 'fibonacciFirstWithCondition');
     return [fibs[1][0] + 1, fibs[0][1] + fibs[1][1]];
 }
 
@@ -27,7 +27,7 @@ export function fibonacciFirstWithCondition(stopCondition: (i: number, f: bigint
  * Generates a list of fibonacci numbers with an upperbound (included)
  */
 export function fibonacciListWithUpperBound(upperBound: bigint): [number, bigint][] {
-    assert(upperBound > 0);
+    assert(upperBound > 0, 'fibonacciListWithUpperBound');
     return fibonacciListWithStopCondition((i: number, f: bigint): boolean => f > upperBound);
 }
 
@@ -36,7 +36,7 @@ export function fibonacciListWithUpperBound(upperBound: bigint): [number, bigint
  * Generates the n-th fibonacci number
  */
 export function fibonacciN(index: number): [number, bigint] {
-    assert(index > 0);
+    assert(index > 0, 'fibonacciN');
     return fibonacciListWithStopCondition((i: number, f: bigint): boolean => i > index)[index - 1];
 }
 

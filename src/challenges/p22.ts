@@ -1,10 +1,9 @@
 import {input} from "../inputs/p22";
+import {alphabeticalValue} from "../utilities/strings";
 
-function alphabeticalValue(s: string): number {
-    return s.split("").map(c => c.charCodeAt(0) - 64).reduce((c, n) => c + n, 0);
-}
 
 export function run(): number {
-    const names: string[] = input.replaceAll('"', "").split(",").sort();
-    return names.reduce((c, n, i) => c + (i + 1) * alphabeticalValue(n), 0);
+    return input.replaceAll('"', "")
+        .split(",").sort()
+        .reduce((c: number, n: string, i: number) => c + (i + 1) * alphabeticalValue(n), 0);
 }

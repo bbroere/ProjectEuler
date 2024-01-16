@@ -3,5 +3,5 @@ export function run(): number {
         .toString()
         .split("")
         .map(Number)
-        .reduce((c, n) => c + n, 0);
+        .reduce((c: number, n: number) => c + n, 0);
 }

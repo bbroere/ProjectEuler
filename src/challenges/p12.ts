@@ -1,9 +1,9 @@
-import {nofFactors} from "../utils";
+import {numberOfDivisors} from "../utilities/primes";
 
 export function run(): number {
     let index: number = 1;
     let latest: number = index;
-    while (nofFactors(latest) <= 500) {
+    while (numberOfDivisors(latest) <= 500) {
         index++;
         latest += index;
     }

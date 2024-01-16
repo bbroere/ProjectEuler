@@ -1,7 +1,6 @@
 import {input} from "../inputs/p13";
+import {sumWithConditionBigInt} from "../utilities/sequences";
 
-export function run(): number {
-    // Typescript cna do this just fine
-    const numbers: number[] = input.split("\n").map(Number);
-    return Number(BigInt(numbers.reduce((c, n) => c + n, 0)).toString().slice(0, 10));
+export function run(): string {
+    return sumWithConditionBigInt(input.split("\n").map(BigInt)).toString().slice(0, 10);
 }

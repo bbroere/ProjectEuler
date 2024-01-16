@@ -1,3 +1,5 @@
+import assert from "node:assert";
+
 /**
  * Sums up all number values in a list with an optional condition
  */
@@ -35,3 +37,19 @@ function _sumWithConditionG<T>(
     }, zero);
 }
 
+/**
+ * Makes a list of all permutations of a given list with a given operation
+ */
+export function permutations<T>(l: T[], op: (lhs: T, rhs: T) => T): T[] {
+    assert(l.length > 0);
+    if (l.length == 1) {
+        return [l[0]];
+    } else {
+        const res: T[] = [];
+        for (let i: number = 0; i < l.length; i++) {
+            const newL: T[] = [...l.slice(0, i), ...l.slice(i + 1, l.length)];
+            permutations(newL, op).map((s: T) => op(l[i], s)).forEach((t: T) => res.push(t));
+        }
+        return res;
+    }
+}

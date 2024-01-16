@@ -1,17 +1,12 @@
-function collatzStep(n: number): number {
-    if (n % 2 == 0) {
-        return n / 2;
-    }
-    return 3 * n + 1;
-}
+import {collatz} from "../utilities/numbers";
 
 export function run(): number {
     const chainLengths: Map<number, number> = new Map<number, number>();
-    for (let i = 1; i < 1000000; i++) {
-        let current = i;
-        let length = 1;
+    for (let i: number = 1; i < 1000000; i++) {
+        let current: number = i;
+        let length: number = 1;
         while (current != 1 && !chainLengths.has(current)) {
-            current = collatzStep(current);
+            current = collatz(current);
             length++;
         }
         if (chainLengths.has(current)) {
@@ -20,5 +15,6 @@ export function run(): number {
             chainLengths.set(i, length);
         }
     }
-    return Array.from(chainLengths.entries()).reduce((a, b) => a[1] < b[1] ? b : a)[0];
+    return Array.from(chainLengths.entries())
+        .reduce((a: [number, number], b: [number, number]): [number, number] => a[1] < b[1] ? b : a)[0];
 }
