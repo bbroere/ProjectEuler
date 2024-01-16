@@ -1,5 +1,5 @@
-import {fibonacciWithCondition} from "../utils";
+import {fibonacciFirstWithCondition} from "../utilities/fibonacci";
 
 export function run(): number {
-    return fibonacciWithCondition((f: bigint) => `${f}`.length >= 1000)[0];
+    return fibonacciFirstWithCondition((i: number, f: bigint): boolean => `${f}`.length >= 1000)[0];
 }

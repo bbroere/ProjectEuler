@@ -17,10 +17,16 @@ export function fibonacciListWithStopCondition(stopCondition: (i: number, f: big
     return result;
 }
 
+export function fibonacciFirstWithCondition(stopCondition: (i: number, f: bigint) => boolean): [number, bigint] {
+    const fibs: [number, bigint][] = fibonacciListWithStopCondition(stopCondition).slice(-2);
+    assert(fibs.length == 2);
+    return [fibs[1][0] + 1, fibs[0][1] + fibs[1][1]];
+}
+
 /**
  * Generates a list of fibonacci numbers with an upperbound (included)
  */
-export function fibonacciWithUpperBound(upperBound: bigint): [number, bigint][] {
+export function fibonacciListWithUpperBound(upperBound: bigint): [number, bigint][] {
     assert(upperBound > 0);
     return fibonacciListWithStopCondition((i: number, f: bigint): boolean => f > upperBound);
 }
