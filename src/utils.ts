@@ -1,14 +1,5 @@
 import assert from "node:assert";
 
-
-/**
- * Checks for 2 numbers a and b if sqrt(a^2 + b^2) is an integer
- */
-export function checkPythagoreanTriplet(a: number, b: number): boolean {
-    const c = Math.sqrt(a * a + b * b);
-    return Math.floor(c) == c;
-}
-
 /**
  * Calculates the number of prime factors a number has
  */

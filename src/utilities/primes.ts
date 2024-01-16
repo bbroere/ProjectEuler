@@ -8,7 +8,7 @@ export function factorize(n: number): Map<number, number> {
     const res: Map<number, number> = new Map<number, number>();
     let remainder: number = n;
     for (let i: number = 2; remainder != 1; i++) {
-        while (remainder / i == Math.floor(remainder / i)) {
+        while (Number.isInteger(remainder / i)) {
             remainder = remainder / i;
             if (res.has(i)) {
                 res.set(i, res.get(i) + 1);
