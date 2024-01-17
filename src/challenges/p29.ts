@@ -1,3 +1,5 @@
+import {filterUnique} from "../utilities/sequences";
+
 export function run(): number {
     const upperbound: number = 100;
     const res: number[] = [];
@@ -6,5 +8,5 @@ export function run(): number {
             res.push(Math.pow(a, b));
         }
     }
-    return res.filter((v: number, i: number, a: number[]) => a.indexOf(v) === i).length;
+    return filterUnique(res).length;
 }

@@ -1,6 +1,14 @@
 import assert from "node:assert";
 
 /**
+ * Filters a list on unique values.
+ * Could also use a set though, but this is often faster than creating a set from a list
+ */
+export function filterUnique<T>(list: T[]): T[] {
+    return list.filter((v: T, i: number, a: T[]): boolean => a.indexOf(v) === i);
+}
+
+/**
  * Sums up all number values in a list with an optional condition
  */
 export function sumWithCondition(
