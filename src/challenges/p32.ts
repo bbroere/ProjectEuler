@@ -16,7 +16,7 @@ export function run(): number {
         const maxB: number = Math.pow(10, 5 - p + 1);
         for (let b: number = minB; b < maxB; b++) {
             const digits: string[] = `${a}${b}${a * b}`.split("");
-            const uniqueDigits: string[] = filterUnique(digits);
+            const uniqueDigits: string[] = filterUnique(digits); // many short filters is better using arrays then sets
             if (!digits.includes("0") && digits.length == 9 && uniqueDigits.length == 9) {
                 res.add(a * b);
             }
