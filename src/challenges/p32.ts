@@ -1,4 +1,5 @@
-import {filterUnique, sumWithCondition} from "../utilities/sequences";
+import {sumWithCondition} from "../utilities/sequences";
+import {isOneNinePandigital} from "../utilities/numbers";
 
 export function run(): number {
     // Every part must have at least one digit, so we need to loop to at most 9999999 (7 nines)
@@ -15,9 +16,7 @@ export function run(): number {
         const minB: number = Math.pow(10, 4 - p);
         const maxB: number = Math.pow(10, 5 - p + 1);
         for (let b: number = minB; b < maxB; b++) {
-            const digits: string[] = `${a}${b}${a * b}`.split("");
-            const uniqueDigits: string[] = filterUnique(digits); // many short filters is better using arrays then sets
-            if (!digits.includes("0") && digits.length == 9 && uniqueDigits.length == 9) {
+            if (isOneNinePandigital(`${a}${b}${a * b}`)) {
                 res.add(a * b);
             }
         }

@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {properDivisors} from "./primes";
-import {sumWithCondition} from "./sequences";
+import {filterUnique, sumWithCondition} from "./sequences";
 
 /**
  * Calculates LCM of a list of arguments
@@ -66,4 +66,13 @@ export function amicableMate(n: number): number {
         }
     }
     return -1;
+}
+
+/**
+ * Checks if a given number (or string rep of a number) is 1-9 pandigital
+ */
+export function isOneNinePandigital(n: number | string): boolean {
+    const digits = String(n).split("");
+    const uniqueDigits: string[] = filterUnique(digits); // many short filters is better using arrays then sets
+    return !digits.includes("0") && digits.length == 9 && uniqueDigits.length == 9;
 }
