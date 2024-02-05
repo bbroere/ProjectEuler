@@ -24,6 +24,14 @@ export function lcm(...args: number[]): number {
 }
 
 /**
+ * Returns the GCD of a list of arguments, based on the GCD formula
+ */
+export function gcd(...args: number[]): number {
+    assert(args.length > 1, 'gcd');
+    return args.reduce((c: number, n: number) => c * n, 1) / lcm(...args);
+}
+
+/**
  * Calculates the factorial of a number
  */
 export function factorial(n: number): bigint {
