@@ -22,3 +22,10 @@ export function alphabeticalValue(s: string): number {
 export function lexicographicPermutations(l: string[]): string[] {
     return permutations(l.sort(), (a: string, b: string) => a + b);
 }
+
+/**
+ * Reverses a string
+ */
+export function reverse(s: string): string {
+    return s.split("").reverse().join("");
+}
