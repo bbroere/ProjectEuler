@@ -84,3 +84,16 @@ export function isOneNinePandigital(n: number | string): boolean {
     const uniqueDigits: string[] = filterUnique(digits); // many short filters is better using arrays then sets
     return !digits.includes("0") && digits.length == 9 && uniqueDigits.length == 9;
 }
+
+/**
+ * Champernowne's constant for base 10
+ * Returns string to be more precise
+ */
+export function champernowneConstant(nBound?: number, dBound?: number): string {
+    assert(nBound || dBound, 'champernowneConstant');
+    let res: string = '0.';
+    for (let i: number = 1; (nBound ? i <= nBound : true) && (dBound ? res.length - 2 < dBound : true); i++) {
+        res += i.toString();
+    }
+    return res;
+}
