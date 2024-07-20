@@ -4,8 +4,25 @@ import assert from "node:assert";
  * Filters a list on unique values.
  * Could also use a set though, but this is often faster than creating a set from a list
  */
-export function filterUnique<T>(list: T[]): T[] {
-    return list.filter((v: T, i: number, a: T[]): boolean => a.indexOf(v) === i);
+export function filterUnique<T>(
+    list: T[],
+    compareFn: (lhs: T, rhs: T) => boolean = (lhs: T, rhs: T): boolean => lhs === rhs
+): T[] {
+    return list.filter((v: T, i: number, a: T[]): boolean => a.findIndex((t: T): boolean => compareFn(t, v)) === i);
+}
+
+/**
+ * GroupBy function for arrays
+ */
+export function groupBy<T, K>(array: T[], keyFn: (t: T) => K): Map<K, T[]> {
+    return array.reduce((result: Map<K, T[]>, currentValue: T) => {
+        const groupKey: K = keyFn(currentValue);
+        if (!result.has(groupKey)) {
+            result.set(groupKey, []);
+        }
+        result.get(groupKey)!.push(currentValue);
+        return result;
+    }, new Map<K, T[]>());
 }
 
 /**
