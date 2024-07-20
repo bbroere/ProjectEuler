@@ -77,12 +77,17 @@ export function amicableMate(n: number): number {
 }
 
 /**
- * Checks if a given number (or string rep of a number) is 1-9 pandigital
+ * Checks if a given number (or string rep of a number) is 1-<length> pandigital
  */
-export function isOneNinePandigital(n: number | string): boolean {
-    const digits = String(n).split("");
+export function isPanDigital(n: number | string): boolean {
+    const digits: string[] = String(n).split("");
     const uniqueDigits: string[] = filterUnique(digits); // many short filters is better using arrays then sets
-    return !digits.includes("0") && digits.length == 9 && uniqueDigits.length == 9;
+    return !digits.includes("0") && digits.length == uniqueDigits.length;
+}
+
+export function generateAllPandigitals(length: number): number[] {
+    const digits: number[] = Array.from({length: length}, (_, i) => i + 1);
+    return digits;
 }
 
 /**

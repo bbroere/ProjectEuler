@@ -1,4 +1,4 @@
-import {isOneNinePandigital} from "../utilities/numbers";
+import {isPanDigital} from "../utilities/numbers";
 
 export function run(): number {
     // We're looking for the largest pandigital number that can be formed by multiplying an integer by (1, 2, ..., n)
@@ -26,7 +26,7 @@ export function run(): number {
             for (let j = 1; j <= m; j++) {
                 res += (i * j).toString();
             }
-            if(isOneNinePandigital(res)) {
+            if(isPanDigital(res)) {
                 maxPandigital = Math.max(maxPandigital, parseInt(res));
             }
         }
