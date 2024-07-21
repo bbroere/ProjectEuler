@@ -1,6 +1,7 @@
 import assert from "node:assert";
 import {properDivisors} from "./primes";
 import {filterUnique, sumWithCondition} from "./sequences";
+import {lexicographicPermutations} from "./strings";
 
 /**
  * Calculates LCM of a list of arguments
@@ -79,15 +80,23 @@ export function amicableMate(n: number): number {
 /**
  * Checks if a given number (or string rep of a number) is 1-<length> pandigital
  */
-export function isPanDigital(n: number | string): boolean {
+export function isPanDigital(n: number | string, includeZero: boolean = false): boolean {
     const digits: string[] = String(n).split("");
     const uniqueDigits: string[] = filterUnique(digits); // many short filters is better using arrays then sets
-    return !digits.includes("0") && digits.length == uniqueDigits.length;
+    return (includeZero || !digits.includes("0")) && digits.length == uniqueDigits.length;
 }
 
-export function generateAllPandigitals(length: number): number[] {
-    const digits: number[] = Array.from({length: length}, (_, i) => i + 1);
-    return digits;
+/**
+ * Generates all pandigital numbers of a given length
+ * @param maxN the maximum number of digits
+ * @param includeZero whether to include zero in the pandigital numbers
+ */
+export function generateAllNPandigitals(maxN: number, includeZero: boolean = false): number[] {
+    const digits: number[] = Array.from({length: maxN}, (_, i: number) => i + 1);
+    if (includeZero) {
+        digits.unshift(0);
+    }
+    return lexicographicPermutations(digits.map((t: number) => t.toString())).map((t: string) => parseInt(t));
 }
 
 /**
