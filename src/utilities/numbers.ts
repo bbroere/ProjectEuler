@@ -102,3 +102,15 @@ export function champernowneConstant(nBound?: number, dBound?: number): string {
     }
     return res;
 }
+
+/**
+ * Generates a list of triangle numbers up to a given upper bound
+ * @param upperBound Included upper bound
+ */
+export function triangleNumbers(upperBound: number): number[] {
+    const res: number[] = [];
+    for (let i: number = 1; i <= upperBound; i++) {
+        res.push(i * (i + 1) / 2);
+    }
+    return res;
+}

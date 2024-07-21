@@ -34,5 +34,8 @@
     <TypeScriptCodeStyleSettings version="0">
       <option name="FORCE_SEMICOLON_STYLE" value="true" />
     </TypeScriptCodeStyleSettings>
+    <codeStyleSettings language="TypeScript">
+      <option name="ARRAY_INITIALIZER_WRAP" value="1" />
+    </codeStyleSettings>
   </code_scheme>
 </component>
