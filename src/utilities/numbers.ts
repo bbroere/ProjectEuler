@@ -123,3 +123,19 @@ export function triangleNumbers(upperBound: number): number[] {
     }
     return res;
 }
+
+/**
+ * Generates a list of square numbers up to a given upper bound
+ * @param upperBound Included upper bound
+ */
+export function pentagonalNumbers(upperBound: number): number[] {
+    const res: number[] = [];
+    for (let i: number = 1; i <= upperBound; i++) {
+        res.push(i * (3 * i - 1) / 2);
+    }
+    return res;
+}
+
+export function isPentagonal(n: number): boolean {
+    return (1 + Math.sqrt(1 + 24 * n)) % 6 == 0;
+}
