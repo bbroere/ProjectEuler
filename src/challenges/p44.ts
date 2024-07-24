@@ -1,7 +1,7 @@
-import {isPentagonal, pentagonalNumbers} from "../utilities/numbers";
+import {generateFirstNFromFn, isPentagonal, pentagonalNumber} from "../utilities/numbers";
 
 function findWithMax(max: number): number | undefined {
-    const allPentagonals: number[] = pentagonalNumbers(max);
+    const allPentagonals: number[] = generateFirstNFromFn(max, pentagonalNumber);
     let currentMin: number = allPentagonals.slice(-1)[0];
     let foundOne: boolean = false;
     for (let i: number = 0; i < allPentagonals.length; i++) {

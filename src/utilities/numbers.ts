@@ -112,30 +112,34 @@ export function champernowneConstant(nBound?: number, dBound?: number): string {
     return res;
 }
 
-/**
- * Generates a list of triangle numbers up to a given upper bound
- * @param upperBound Included upper bound
- */
-export function triangleNumbers(upperBound: number): number[] {
-    const res: number[] = [];
-    for (let i: number = 1; i <= upperBound; i++) {
-        res.push(i * (i + 1) / 2);
-    }
-    return res;
+export function triangleNumber(n: number): number {
+    return n * (n + 1) / 2;
 }
 
-/**
- * Generates a list of square numbers up to a given upper bound
- * @param upperBound Included upper bound
- */
-export function pentagonalNumbers(upperBound: number): number[] {
-    const res: number[] = [];
-    for (let i: number = 1; i <= upperBound; i++) {
-        res.push(i * (3 * i - 1) / 2);
-    }
-    return res;
+export function isTriangle(n: number): boolean {
+    return (Math.sqrt(1 + 8 * n) - 1) % 2 == 0;
+}
+
+export function pentagonalNumber(n: number): number {
+    return n * (3 * n - 1) / 2;
 }
 
 export function isPentagonal(n: number): boolean {
     return (1 + Math.sqrt(1 + 24 * n)) % 6 == 0;
+}
+
+export function hexagonalNumber(n: number): number {
+    return n * (2 * n - 1);
+}
+
+export function isHexagonal(n: number): boolean {
+    return (1 + Math.sqrt(1 + 8 * n)) % 4 == 0;
+}
+
+export function generateFirstNFromFn(n: number, fn: (_: number) => number): number[] {
+    const res: number[] = [];
+    for (let i: number = 1; i <= n; i++) {
+        res.push(fn(i));
+    }
+    return res;
 }
