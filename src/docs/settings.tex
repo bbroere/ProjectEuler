@@ -1,0 +1,23 @@
+\documentclass[12pt]{article}
+
+%Standard packages
+\usepackage[margin=1in]{geometry}
+\usepackage[english]{babel}
+\usepackage{graphics}
+\usepackage{subcaption}
+\usepackage{color}
+\usepackage{pgf,tikz}
+\usetikzlibrary{decorations.markings}
+\usepackage[justification=centering]{caption}
+\usepackage{enumitem}
+\usepackage{latexsym}
+\usepackage{natbib}
+\usepackage[breaklinks]{hyperref}
+
+%Math packages
+\usepackage{amsmath, amsfonts, amsthm, amssymb}
+
+\newcommand{\problem}[1]{
+    \section*{Problem #1}
+    \input{#1}
+}

@@ -5,3 +5,7 @@
 # run file
 src/run.ts
 src/solutions.ts
+
+# latex things
+**/docs/generated/*
+!**/docs/generated/*.pdf
