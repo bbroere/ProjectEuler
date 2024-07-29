@@ -25,6 +25,10 @@ export function groupBy<T, K>(array: T[], keyFn: (t: T) => K): Map<K, T[]> {
     }, new Map<K, T[]>());
 }
 
+export function mapMapValues<K, V, R>(map: Map<K, V>, fn: (_: V) => R, filterOpt: (_: [K, V]) => boolean = _ => true): Map<K, R> {
+    return new Map<K, R>(Array.from(map.entries()).filter(filterOpt).map(([k, v]) => [k, fn(v)]));
+}
+
 /**
  * Sums up all number values in a list with an optional condition
  */
