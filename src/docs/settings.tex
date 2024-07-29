@@ -10,14 +10,13 @@
 \usetikzlibrary{decorations.markings}
 \usepackage[justification=centering]{caption}
 \usepackage{enumitem}
-\usepackage{latexsym}
 \usepackage{natbib}
 \usepackage[breaklinks]{hyperref}
 
 %Math packages
-\usepackage{amsmath, amsfonts, amsthm, amssymb}
+\usepackage{amsmath, amsfonts, amsthm, tikz, xparse}
 
 \newcommand{\problem}[1]{
     \section*{Problem #1}
-    \input{#1}
+    \input{challenges/#1}
 }
