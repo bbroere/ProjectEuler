@@ -3,6 +3,7 @@
   "version": "0.0.0",
   "scripts": {
     "prep": "ts-node -O '{\"module\": \"commonjs\"}' prep.ts",
+    "gen": "ts-node -O '{\"module\": \"commonjs\"}' gen.ts --",
     "lint": "npx eslint .",
     "lint:fix": "npm run lint -- --fix",
     "compile": "npm run prep && npx tsc",
