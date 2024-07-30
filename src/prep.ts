@@ -15,9 +15,9 @@ function makeRunFile(): void {
         return `        case ${nmbr}:\n` +
             `            const s${nmbr} = p${nmbr}();\n` +
             `            if(solutions.has(${nmbr})) {\n` +
-            `                s${nmbr} == solutions.get(${nmbr}) ? console.log(\`\${s${nmbr}} is correct\`) : console.error(\`\${s${nmbr}} is incorrect\`);\n` +
+            `                s${nmbr} == solutions.get(${nmbr}) ? console.log(s${nmbr}, "Correct") : console.error(s${nmbr}, "Incorrect!");\n` +
             `            } else {\n` +
-            `                console.log(s${nmbr});\n` +
+            `                console.log(s${nmbr}, "No solution to compare to");\n` +
             `            }\n` +
             '            break;\n';
     });
