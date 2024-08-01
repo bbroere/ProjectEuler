@@ -96,3 +96,21 @@ export function primeN(n: number): number {
     assert(allPrimes.length >= n, 'primeN-2');
     return allPrimes[n - 1];
 }
+
+export function isPrime(n: number): boolean {
+    if (n < 2) {
+        return false;
+    }
+    if (n == 2) {
+        return true;
+    }
+    if (n % 2 == 0) {
+        return false;
+    }
+    for (let i: number = 3; i <= Math.sqrt(n); i += 2) {
+        if (n % i == 0) {
+            return false;
+        }
+    }
+    return true;
+}
