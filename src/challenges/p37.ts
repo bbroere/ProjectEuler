@@ -1,4 +1,4 @@
-import {sumWithCondition} from "../utilities/sequences";
+import {sum} from "../utilities/sequences";
 import {primesWithUpperBound} from "../utilities/factorization";
 
 function allLeftAndRight(s: string): Set<number> {
@@ -22,5 +22,5 @@ export function run(): number {
         if (overlap.size == alr.size)
             results.add(i);
     }
-    return sumWithCondition([...results]);
+    return sum([...results]);
 }

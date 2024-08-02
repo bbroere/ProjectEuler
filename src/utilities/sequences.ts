@@ -6,7 +6,6 @@ import assert from "node:assert";
 export function numbersWithMaxSize(maxSizeIncluding: number): number[] {
     assert(maxSizeIncluding > 0, 'numbersWithMaxSize');
     return [...Array(maxSizeIncluding + 1).keys()].slice(1);
-    // return Array.from({length: maxSizeIncluding}, (_, i: number) => i + 1);
 }
 
 /**
@@ -19,20 +18,36 @@ export function sum(list: bigint[], condition: (n: bigint) => boolean): bigint;
 export function sum(list: number[] | bigint[], condition?: ((n: number) => boolean) | ((n: bigint) => boolean)): number | bigint {
     switch (typeof list[0]) {
         case typeof 0:
-            return (list as number[]).reduce((c, n): number => condition && ((condition as (_: number) => boolean)(n)) ? c + n : c, 0);
+            const numberCondition = condition ? condition as (_: number) => boolean : (_: number): boolean => true;
+            return (list as number[]).reduce((c, n): number => numberCondition(n) ? c + n : c, 0);
         case typeof BigInt(0):
-            return (list as bigint[]).reduce((c, n): bigint => condition && ((condition as (_: bigint) => boolean)(n)) ? c + n : c, 0n);
+            const bigintCondition = condition ? condition as (_: bigint) => boolean : (_: bigint): boolean => true;
+            return (list as bigint[]).reduce((c, n): bigint => bigintCondition(n) ? c + n : c, 0n);
         default:
             throw new Error('sum');
     }
 }
 
-
-
+/**
+ * Makes a list of all permutations of a given list with a given operation
+ */
+export function permutations<T>(l: T[], op: (lhs: T, rhs: T) => T): T[] {
+    assert(l.length > 0);
+    if (l.length == 1) {
+        return [l[0]];
+    } else {
+        const res: T[] = [];
+        for (let i: number = 0; i < l.length; i++) {
+            const newL: T[] = [...l.slice(0, i), ...l.slice(i + 1, l.length)];
+            permutations(newL, op).map((s: T) => op(l[i], s)).forEach((t: T) => res.push(t));
+        }
+        return res;
+    }
+}
 
 /**
  * Filters a list on unique values.
- * Could also use a set though, but this is often faster than creating a set from a list
+ * Could also use a set though, but this is often faster than creating a set from a list (see tests)
  */
 export function filterUnique<T>(
     list: T[],
@@ -55,60 +70,9 @@ export function groupBy<T, K>(array: T[], keyFn: (t: T) => K): Map<K, T[]> {
     }, new Map<K, T[]>());
 }
 
+/**
+ * Maps a map to a new map with a given function and an optional filter
+ */
 export function mapMapValues<K, V, R>(map: Map<K, V>, fn: (_: V) => R, filterOpt: (_: [K, V]) => boolean = _ => true): Map<K, R> {
     return new Map<K, R>(Array.from(map.entries()).filter(filterOpt).map(([k, v]) => [k, fn(v)]));
-}
-
-/**
- * Sums up all number values in a list with an optional condition
- */
-export function sumWithCondition(
-    list: number[],
-    condition: (n: number) => boolean = (_: number): boolean => true
-): number {
-    return _sumWithConditionG(list, condition, 0, (l: number, r: number) => l + r);
-}
-
-/**
- * Sums up all bigint values in a list with an optional condition
- */
-export function sumWithConditionBigInt(
-    list: bigint[],
-    condition: (n: bigint) => boolean = (_: bigint): boolean => true
-): bigint {
-    return _sumWithConditionG(list, condition, 0n, (l: bigint, r: bigint) => l + r);
-}
-
-/**
- * Sums up all T values in a list with a condition
- */
-function _sumWithConditionG<T>(
-    list: T[],
-    condition: (n: T) => boolean,
-    zero: T,
-    op: (lhs: T, rhs: T) => T
-): T {
-    return list.reduce((clt: T, nxt: T): T => {
-        if (condition(nxt)) {
-            return op(clt, nxt);
-        }
-        return clt;
-    }, zero);
-}
-
-/**
- * Makes a list of all permutations of a given list with a given operation
- */
-export function permutations<T>(l: T[], op: (lhs: T, rhs: T) => T): T[] {
-    assert(l.length > 0);
-    if (l.length == 1) {
-        return [l[0]];
-    } else {
-        const res: T[] = [];
-        for (let i: number = 0; i < l.length; i++) {
-            const newL: T[] = [...l.slice(0, i), ...l.slice(i + 1, l.length)];
-            permutations(newL, op).map((s: T) => op(l[i], s)).forEach((t: T) => res.push(t));
-        }
-        return res;
-    }
 }

@@ -1,7 +1,9 @@
+import {sum} from "../utilities/sequences";
+
+// Average runtime ~0.007 ms
 export function run(): number {
-    return BigInt(Math.pow(2, 1000))
+    return sum((2n ** 1000n)
         .toString()
         .split("")
-        .map(Number)
-        .reduce((c: number, n: number) => c + n, 0);
+        .map(Number));
 }

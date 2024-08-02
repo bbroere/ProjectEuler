@@ -1,5 +1,5 @@
 import {generateAllNPandigitals} from "../utilities/numbers";
-import {properDivisors} from "../utilities/factorization";
+import {allDivisors} from "../utilities/factorization";
 
 export function run(): number {
     // Not very clean, but effective
@@ -16,5 +16,5 @@ export function run(): number {
     ].sort((a: number, b: number) => b - a)
         // Make it a bit quicker by filtering out the ones that are divisible by 2, 3 or 5
         .filter((t: number) => t % 2 != 0 && t % 3 != 0 && t % 5 != 0)
-        .find((t: number): boolean => properDivisors(t).length == 1); // finds the first
+        .find((t: number): boolean => allDivisors(t).length == 2); // finds the first
 }

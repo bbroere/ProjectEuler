@@ -1,5 +1,5 @@
 import {factorial} from "../utilities/numbers";
-import {sumWithCondition} from "../utilities/sequences";
+import {sum} from "../utilities/sequences";
 
 export function run(): number {
     const factorials: number[] = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9].map(factorial).map(Number);
@@ -11,7 +11,7 @@ export function run(): number {
     let res: number = 0;
     for (let n: number = 10; n < Math.pow(10, 7); n++) {
         const facts: number[] = `${n}`.split("").map(Number).map((n: number) => factorials[n]);
-        if (sumWithCondition(facts) == n) {
+        if (sum(facts) == n) {
             res += n;
         }
     }

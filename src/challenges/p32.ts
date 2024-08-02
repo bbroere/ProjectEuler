@@ -1,4 +1,4 @@
-import {sumWithCondition} from "../utilities/sequences";
+import {sum} from "../utilities/sequences";
 import {isPanDigital} from "../utilities/numbers";
 
 export function run(): number {
@@ -21,5 +21,5 @@ export function run(): number {
             }
         }
     }
-    return sumWithCondition([...res.values()]);
+    return sum([...res.values()]);
 }

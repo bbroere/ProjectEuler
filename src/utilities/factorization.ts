@@ -46,18 +46,13 @@ export function primesWithUpperBound(upperBound: number): number[] {
         if (p != 0) {
             let x: number = 2 * p;
             while (x <= upperBound) {
-                primesList[x-1] = 0;
+                primesList[x - 1] = 0;
                 x += p;
             }
         }
     }
     return primesList.filter((t: number): boolean => t != 0);
 }
-
-
-
-
-
 
 /**
  * Calculate number of divisors of a number based on the factorization of that number
@@ -69,11 +64,18 @@ export function numberOfDivisors(n: number): number {
 }
 
 /**
+ * Returns all divisors of a given number n by factorizing, and then constructing the divisors
+ */
+export function allDivisors(n: number): number[] {
+    return _allDivisors([...factorize(n).entries()]);
+}
+
+/**
  * Recursively finds all permutations of a given factorization f
  * I.e. f = [[2,2],[5,1]] it returns [2^0*5^0, 2^0*5^1, 2^1*5^0, 2^1*5^1, 2^2*5^0, 2^2*5^1]
  */
-function _factorizationPermutationRecursion(f: [number, number][]): number[] {
-    assert(f.length > 0, '_factorizationPermutationRecursion');
+function _allDivisors(f: [number, number][]): number[] {
+    assert(f.length > 0, '_allDivisors');
     const n: [number, number] = f.pop();
     const r: number[] = [];
     for (let i: number = 0; i <= n[1]; i++) {
@@ -84,25 +86,14 @@ function _factorizationPermutationRecursion(f: [number, number][]): number[] {
         return r;
     } else {
         // Recursive case
-        const p: number[] = _factorizationPermutationRecursion(f);
+        const p: number[] = _allDivisors(f);
         return r.flatMap((v: number) => p.map((vp: number) => vp * v));
     }
 }
 
 /**
- * Returns a list of all divisors of a given number n by factorizing, and then constructing the divisors
+ * Checks if a number is prime
  */
-export function allDivisors(n: number): number[] {
-    return _factorizationPermutationRecursion([...factorize(n).entries()]);
-}
-
-/**
- * Returns a list of all proper divisors of a given number n by factorizing, and then constructing the divisors
- */
-export function properDivisors(n: number): number[] {
-    return _factorizationPermutationRecursion([...factorize(n).entries()]).filter((t: number): boolean => t != n);
-}
-
 export function isPrime(n: number): boolean {
     if (n < 2) {
         return false;

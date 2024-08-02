@@ -1,5 +1,4 @@
 import {generateAllNPandigitals} from "../utilities/numbers";
-import {sumWithConditionBigInt} from "../utilities/sequences";
 
 export function run(): number {
     const solution = generateAllNPandigitals(9, true)

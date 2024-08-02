@@ -1,4 +1,4 @@
-import {checkPalindrome} from "../utilities/strings";
+import {isPalindrome} from "../utilities/strings";
 
 function reverseAdd(n: number): number {
     return n + parseInt(n.toString().split("").reverse().join(""));
@@ -15,7 +15,7 @@ export function run(): number {
         let n: number = i;
         do {
             n = reverseAdd(n);
-            lychrel = lychrel && !checkPalindrome(n);
+            lychrel = lychrel && !isPalindrome(n);
             j++;
         } while (j < maxIterationsInc && lychrel);
         if (lychrel) {

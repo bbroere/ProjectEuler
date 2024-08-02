@@ -9,15 +9,6 @@ export function isPalindrome(d: string | number): boolean {
     return `${d}` === `${d}`.split("").reverse().join("");
 }
 
-
-
-/**
- * Checks if a string or number is a palindrome
- */
-export function checkPalindrome(s: string | number): boolean {
-    return `${s}` === `${s}`.split("").reverse().join("");
-}
-
 /**
  * Calculates the alphabetical value of a string
  */
@@ -31,12 +22,5 @@ export function alphabeticalValue(s: string): number {
  * Recursively creates a list of all permutations of a set of strings
  */
 export function lexicographicPermutations(l: string[]): string[] {
-    return permutations(l.sort(), (a: string, b: string) => a + b);
-}
-
-/**
- * Reverses a string
- */
-export function reverse(s: string): string {
-    return s.split("").reverse().join("");
+    return permutations(l, (a: string, b: string) => a + b);
 }

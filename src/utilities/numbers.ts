@@ -1,6 +1,6 @@
 import assert from "node:assert";
-import {properDivisors} from "./factorization";
-import {filterUnique, sumWithCondition} from "./sequences";
+import {allDivisors} from "./factorization";
+import {filterUnique, sum} from "./sequences";
 import {lexicographicPermutations} from "./strings";
 
 /**
@@ -32,34 +32,6 @@ export function gcd(...args: number[]): number {
     return args.reduce((c: number, n: number) => c * n, 1) / lcm(...args);
 }
 
-
-
-
-
-
-
-
-
-
-/**
- * Calculates the factorial of a number
- */
-export function factorial(n: number): bigint {
-    let res: bigint = 1n;
-    for (let i: number = 1; i <= n; i++) {
-        res *= BigInt(i);
-    }
-    return res;
-}
-
-/**
- * Calculates the binomial coefficient of 2 numbers
- */
-export function binomialCoefficient(above: number, below: number): bigint {
-    assert(above > below, 'binomialCoefficient');
-    return factorial(above) / (factorial(below) * factorial(above - below));
-}
-
 /**
  * Collatz sequence formula
  */
@@ -71,20 +43,44 @@ export function collatz(n: number): number {
 }
 
 /**
+ * Calculates the factorial of a number as a bigint
+ */
+export function factorial(n: number): bigint {
+    let res: bigint = 1n;
+    for (let i: number = 1; i <= n; i++) {
+        res *= BigInt(i);
+    }
+    return res;
+}
+
+/**
+ * Calculates the binomial coefficient of 2 numbers as a bigint
+ */
+export function binomialCoefficient(above: number, below: number): bigint {
+    assert(above > below, 'binomialCoefficient');
+    return factorial(above) / (factorial(below) * factorial(above - below));
+}
+
+/**
  * Given a number n this function checks if the number is amicable, and if so returns its mate
- * If not it returns -1
+ * If not it returns -1 (for speed not undefined)
  */
 export function amicableMate(n: number): number {
     assert(n > 1, 'amicableMate');
-    const d: number = sumWithCondition(properDivisors(n));
+    const d: number = sum(allDivisors(n)) - n;
     if (d > 1) {
-        const dp: number = sumWithCondition(properDivisors(d));
+        const dp: number = sum(allDivisors(d)) - d;
         if (dp == n) {
             return d;
         }
     }
     return -1;
 }
+
+
+
+
+
 
 /**
  * Checks if a given number (or string rep of a number) is 1-<length> pandigital
