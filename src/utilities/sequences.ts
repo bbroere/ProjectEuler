@@ -1,6 +1,27 @@
 import assert from "node:assert";
 
 /**
+ * Returns an array of numbers from 1 to maxSize
+ */
+export function numbersWithMaxSize(maxSizeIncluding: number): number[] {
+    assert(maxSizeIncluding > 0, 'numbersWithMaxSize');
+    return Array.from({length: maxSizeIncluding}, (_, i: number) => i + 1);
+}
+
+/**
+ * Returns the sum of all numbers in a given list (with an optional condition)
+ */
+export function sum(list: number[]): number;
+export function sum(list: number[], condition: (n: number) => boolean): number;
+export function sum(list: number[], condition?: (n: number) => boolean): number {
+    return list.reduce((c: number, n: number): number => condition(n) ? c + n : c, 0);
+}
+
+
+
+
+
+/**
  * Filters a list on unique values.
  * Could also use a set though, but this is often faster than creating a set from a list
  */
