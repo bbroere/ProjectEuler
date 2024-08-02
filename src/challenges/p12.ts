@@ -1,4 +1,4 @@
-import {numberOfDivisors} from "../utilities/primes";
+import {numberOfDivisors} from "../utilities/factorization";
 
 export function run(): number {
     let index: number = 1;

@@ -1,4 +1,5 @@
 import assert from "node:assert";
+import {numbersWithMaxSize} from "./sequences";
 
 /**
  * Naively factorizes a given number n into its prime factors
@@ -19,6 +20,44 @@ export function factorize(n: number): Map<number, number> {
     }
     return res;
 }
+
+/**
+ * Calculates the nth prime by generating a full list of all primes until a mathematical upperbound is met
+ */
+export function primeN(n: number): number {
+    assert(n > 0, 'primeN');
+    // Determine upper bound by p_n < n * (log(n) + log(log(n)))
+    // Note this only holds for n >= 6, so do a maximum of 11 (5th prime) and this number
+    const upperbound: number = Math.max(11, Math.ceil(n * (Math.log(n) + Math.log(Math.log(n)))));
+    const allPrimes: number[] = primesWithUpperBound(upperbound);
+    assert(allPrimes.length >= n, 'primeN-2');
+    return allPrimes[n - 1];
+}
+
+/**
+ * Generates a list of prime numbers with an upperbound (included)
+ */
+export function primesWithUpperBound(upperBound: number): number[] {
+    assert(upperBound > 1 && upperBound <= 100000000, 'primesWithUpperBound');
+    const primesList: number[] = numbersWithMaxSize(upperBound);
+    primesList[0] = 0;
+    for (let i: number = 1; i < primesList.length; i++) {
+        const p: number = primesList[i];
+        if (p != 0) {
+            let x: number = 2 * p;
+            while (x <= upperBound) {
+                primesList[x-1] = 0;
+                x += p;
+            }
+        }
+    }
+    return primesList.filter((t: number): boolean => t != 0);
+}
+
+
+
+
+
 
 /**
  * Calculate number of divisors of a number based on the factorization of that number
@@ -62,39 +101,6 @@ export function allDivisors(n: number): number[] {
  */
 export function properDivisors(n: number): number[] {
     return _factorizationPermutationRecursion([...factorize(n).entries()]).filter((t: number): boolean => t != n);
-}
-
-/**
- * Generates a list of prime numbers with an upperbound (included)
- */
-export function primesWithUpperBound(upperBound: number): number[] {
-    assert(upperBound > 1, 'primesWithUpperBound');
-    const primesList: number[] = [...Array(upperBound + 1).keys()];
-    primesList[1] = 0;
-    for (let i: number = 2; i < primesList.length; i++) {
-        const p: number = primesList[i];
-        if (p != 0) {
-            let x: number = 2 * p;
-            while (x <= upperBound) {
-                primesList[x] = 0;
-                x += p;
-            }
-        }
-    }
-    return primesList.filter((t: number): boolean => t != 0);
-}
-
-/**
- * Calculates the nth prime by generating a full list of all primes until a mathematical upperbound is met
- */
-export function primeN(n: number): number {
-    assert(n > 0, 'primeN');
-    // Determine upper bound by p_n < n * (log(n) + log(log(n)))
-    // Note this only holds for n >= 6, so do a maximum of 11 (5th prime) and this number
-    const upperbound: number = Math.max(11, Math.ceil(n * (Math.log(n) + Math.log(Math.log(n)))));
-    const allPrimes: number[] = primesWithUpperBound(upperbound);
-    assert(allPrimes.length >= n, 'primeN-2');
-    return allPrimes[n - 1];
 }
 
 export function isPrime(n: number): boolean {

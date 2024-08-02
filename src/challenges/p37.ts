@@ -1,5 +1,5 @@
 import {sumWithCondition} from "../utilities/sequences";
-import {primesWithUpperBound} from "../utilities/primes";
+import {primesWithUpperBound} from "../utilities/factorization";
 
 function allLeftAndRight(s: string): Set<number> {
     const res: Set<number> = new Set<number>();

@@ -1,4 +1,4 @@
-import {isPrime} from "../utilities/primes";
+import {isPrime} from "../utilities/factorization";
 
 export function run(): number {
     // Ofcourse we're not going to brute force this one by generating the entire spiral

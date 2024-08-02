@@ -1,4 +1,4 @@
-import {primesWithUpperBound} from "../utilities/primes";
+import {primesWithUpperBound} from "../utilities/factorization";
 import {groupBy, mapMapValues} from "../utilities/sequences";
 
 export function run(): number {

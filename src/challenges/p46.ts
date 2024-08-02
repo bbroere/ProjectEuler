@@ -1,4 +1,4 @@
-import {primesWithUpperBound} from "../utilities/primes";
+import {primesWithUpperBound} from "../utilities/factorization";
 
 function findWithMax(primesUpperBound: number, nofSquares: number): number | undefined {
     const P: number[] = primesWithUpperBound(primesUpperBound);

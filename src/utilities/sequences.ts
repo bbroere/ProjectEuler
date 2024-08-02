@@ -5,18 +5,27 @@ import assert from "node:assert";
  */
 export function numbersWithMaxSize(maxSizeIncluding: number): number[] {
     assert(maxSizeIncluding > 0, 'numbersWithMaxSize');
-    return Array.from({length: maxSizeIncluding}, (_, i: number) => i + 1);
+    return [...Array(maxSizeIncluding + 1).keys()].slice(1);
+    // return Array.from({length: maxSizeIncluding}, (_, i: number) => i + 1);
 }
 
 /**
  * Returns the sum of all numbers in a given list (with an optional condition)
  */
 export function sum(list: number[]): number;
+export function sum(list: bigint[]): bigint;
 export function sum(list: number[], condition: (n: number) => boolean): number;
-export function sum(list: number[], condition?: (n: number) => boolean): number {
-    return list.reduce((c: number, n: number): number => condition(n) ? c + n : c, 0);
+export function sum(list: bigint[], condition: (n: bigint) => boolean): bigint;
+export function sum(list: number[] | bigint[], condition?: ((n: number) => boolean) | ((n: bigint) => boolean)): number | bigint {
+    switch (typeof list[0]) {
+        case typeof 0:
+            return (list as number[]).reduce((c, n): number => condition && ((condition as (_: number) => boolean)(n)) ? c + n : c, 0);
+        case typeof BigInt(0):
+            return (list as bigint[]).reduce((c, n): bigint => condition && ((condition as (_: bigint) => boolean)(n)) ? c + n : c, 0n);
+        default:
+            throw new Error('sum');
+    }
 }
-
 
 
 

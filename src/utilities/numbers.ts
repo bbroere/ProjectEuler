@@ -1,5 +1,5 @@
 import assert from "node:assert";
-import {properDivisors} from "./primes";
+import {properDivisors} from "./factorization";
 import {filterUnique, sumWithCondition} from "./sequences";
 import {lexicographicPermutations} from "./strings";
 
@@ -9,7 +9,7 @@ import {lexicographicPermutations} from "./strings";
 export function lcm(...args: number[]): number {
     assert(args.length > 1, 'lcm');
     let a: number = args[0];
-    for (let i = 1; i < args.length; i++) {
+    for (let i: number = 1; i < args.length; i++) {
         let a_r: number = a;
         let b_r: number = args[i];
         while (a_r != b_r) {
@@ -31,6 +31,15 @@ export function gcd(...args: number[]): number {
     assert(args.length > 1, 'gcd');
     return args.reduce((c: number, n: number) => c * n, 1) / lcm(...args);
 }
+
+
+
+
+
+
+
+
+
 
 /**
  * Calculates the factorial of a number

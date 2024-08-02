@@ -1,4 +1,4 @@
-import {primesWithUpperBound} from "../utilities/primes";
+import {primesWithUpperBound} from "../utilities/factorization";
 
 function lengthStartingPrimeSequence(primes: number[], a: number, b: number): number {
     let n: number = 0;

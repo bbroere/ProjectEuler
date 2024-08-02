@@ -1,6 +1,9 @@
 import assert from "node:assert";
 import {filterUnique} from "./sequences";
 
+
+
+
 /**
  * Checks for 2 numbers a and b if sqrt(a^2 + b^2) is an integer and, if so, returns it
  */

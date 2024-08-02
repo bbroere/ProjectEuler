@@ -1,4 +1,4 @@
-import {primesWithUpperBound} from "../utilities/primes";
+import {primesWithUpperBound} from "../utilities/factorization";
 
 export function run(): number {
     // It is not the fastest, but it works

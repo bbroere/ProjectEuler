@@ -1,4 +1,4 @@
-import {factorize} from "../utilities/primes";
+import {factorize} from "../utilities/factorization";
 
 export function run(): number {
     const min: number = 125000;

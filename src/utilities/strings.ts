@@ -3,6 +3,17 @@ import {permutations} from "./sequences";
 /**
  * Checks if a string or number is a palindrome
  */
+export function isPalindrome(s: string): boolean;
+export function isPalindrome(n: number): boolean;
+export function isPalindrome(d: string | number): boolean {
+    return `${d}` === `${d}`.split("").reverse().join("");
+}
+
+
+
+/**
+ * Checks if a string or number is a palindrome
+ */
 export function checkPalindrome(s: string | number): boolean {
     return `${s}` === `${s}`.split("").reverse().join("");
 }

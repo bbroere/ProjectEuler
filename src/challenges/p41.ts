@@ -1,5 +1,5 @@
 import {generateAllNPandigitals} from "../utilities/numbers";
-import {properDivisors} from "../utilities/primes";
+import {properDivisors} from "../utilities/factorization";
 
 export function run(): number {
     // Not very clean, but effective

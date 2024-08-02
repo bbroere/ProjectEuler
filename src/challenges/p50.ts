@@ -1,4 +1,4 @@
-import {primesWithUpperBound} from "../utilities/primes";
+import {primesWithUpperBound} from "../utilities/factorization";
 
 export function run(): number {
     const primes: number[] = primesWithUpperBound(1000000);

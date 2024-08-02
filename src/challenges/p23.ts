@@ -1,4 +1,4 @@
-import {properDivisors} from "../utilities/primes";
+import {properDivisors} from "../utilities/factorization";
 import {sumWithCondition} from "../utilities/sequences";
 
 export function run(): number {

@@ -1,6 +1,7 @@
 import {lcm} from "../utilities/numbers";
+import {numbersWithMaxSize} from "../utilities/sequences";
 
+// Average runtime ~25 ms
 export function run(): number {
-    // This is simply the lcm of all numbers
-    return lcm(...[...Array(20).keys()].map((t: number) => t + 1));
+    return lcm(...numbersWithMaxSize(20));
 }
