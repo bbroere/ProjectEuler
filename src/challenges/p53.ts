@@ -1,5 +1,6 @@
-import {binomialCoefficient, factorial} from "../utilities/numbers";
+import {binomialCoefficient} from "../utilities/numbers";
 
+// Average runtime ~0.8 ms
 export function run(): number {
     // The problem here will be the large numbers that start to form by doing the multiplication in the factorials
     // For this we need smart division and multiplication or use bigints

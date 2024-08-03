@@ -37,15 +37,15 @@ export function primeN(n: number): number {
 /**
  * Generates a list of prime numbers with an upperbound (included)
  */
-export function primesWithUpperBound(upperBound: number): number[] {
-    assert(upperBound > 1 && upperBound <= 100000000, 'primesWithUpperBound');
-    const primesList: number[] = numbersWithMaxSize(upperBound);
+export function primesWithUpperBound(upperBoundInc: number): number[] {
+    assert(upperBoundInc > 1 && upperBoundInc <= 100000000, 'primesWithUpperBound');
+    const primesList: number[] = numbersWithMaxSize(upperBoundInc);
     primesList[0] = 0;
     for (let i: number = 1; i < primesList.length; i++) {
         const p: number = primesList[i];
         if (p != 0) {
             let x: number = 2 * p;
-            while (x <= upperBound) {
+            while (x <= upperBoundInc) {
                 primesList[x - 1] = 0;
                 x += p;
             }

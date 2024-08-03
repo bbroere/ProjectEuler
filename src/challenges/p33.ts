@@ -1,6 +1,21 @@
 import assert from "node:assert";
 import {gcd} from "../utilities/numbers";
 
+// Average runtime ~0.4 ms
+export function run(): number {
+    const partLength: number = 2;
+    const matches: [number, number][] = [];
+    for (let n: number = 10 ** (partLength - 1); n < 10 ** partLength - 1; n++)
+        for (let d: number = n + 1; d < 10 ** partLength; d++)
+            if (!`${n}${d}`.includes("0") && isTrivial(n, d))
+                matches.push([n, d]);
+    assert(matches.length == 4);
+    const pN: number = matches.reduce((c: number, n: [number, number]) => c * n[0], 1);
+    const pD: number = matches.reduce((c: number, n: [number, number]) => c * n[1], 1);
+    const GCD: number = gcd(pN, pD);
+    return pD / GCD;
+}
+
 function isTrivial(n: number, d: number): boolean {
     const ns: string[] = String(n).split("");
     const ds: string[] = String(d).split("");
@@ -14,18 +29,4 @@ function isTrivial(n: number, d: number): boolean {
         }
     });
     return isTrivial;
-}
-
-export function run(): number {
-    const partLength: number = 2;
-    const matches: [number, number][] = [];
-    for (let n: number = 10 ** (partLength - 1); n < 10 ** partLength - 1; n++)
-        for (let d: number = n + 1; d < 10 ** partLength; d++)
-            if (!`${n}${d}`.includes("0") && isTrivial(n, d))
-                matches.push([n, d]);
-    assert(matches.length == 4);
-    const pN: number = matches.reduce((c: number, n: [number, number]) => c * n[0], 1);
-    const pD: number = matches.reduce((c: number, n: [number, number]) => c * n[1], 1);
-    const GCD: number = gcd(pN, pD);
-    return pD / GCD;
 }

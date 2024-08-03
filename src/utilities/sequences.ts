@@ -31,18 +31,16 @@ export function sum(list: number[] | bigint[], condition?: ((n: number) => boole
 /**
  * Makes a list of all permutations of a given list with a given operation
  */
-export function permutations<T>(l: T[], op: (lhs: T, rhs: T) => T): T[] {
-    assert(l.length > 0);
-    if (l.length == 1) {
-        return [l[0]];
-    } else {
-        const res: T[] = [];
-        for (let i: number = 0; i < l.length; i++) {
-            const newL: T[] = [...l.slice(0, i), ...l.slice(i + 1, l.length)];
-            permutations(newL, op).map((s: T) => op(l[i], s)).forEach((t: T) => res.push(t));
-        }
-        return res;
+export function permutations<T>(list: T[], op: (lhs: T, rhs: T) => T): T[] {
+    assert(list.length > 0);
+    if (list.length === 1) return [list[0]];
+
+    const result: T[] = [];
+    for (let i = 0; i < list.length; i++) {
+        const remaining = list.slice(0, i).concat(list.slice(i + 1));
+        permutations(remaining, op).forEach(s => result.push(op(list[i], s)));
     }
+    return result;
 }
 
 /**
@@ -71,8 +69,22 @@ export function groupBy<T, K>(array: T[], keyFn: (t: T) => K): Map<K, T[]> {
 }
 
 /**
+ * Checks if all elements in a list satisfy a given function
+ */
+export function forAll<T>(list: T[], fn: (_: T) => boolean): boolean {
+    return list.reduce((c, n) => c && fn(n), true);
+}
+
+/**
  * Maps a map to a new map with a given function and an optional filter
  */
 export function mapMapValues<K, V, R>(map: Map<K, V>, fn: (_: V) => R, filterOpt: (_: [K, V]) => boolean = _ => true): Map<K, R> {
     return new Map<K, R>(Array.from(map.entries()).filter(filterOpt).map(([k, v]) => [k, fn(v)]));
+}
+
+/**
+ * Generates the first n elements of a sequence based on a function, starting from 1
+ */
+export function generateFirstN<T>(n: number, fn: (_: number) => T): T[] {
+    return numbersWithMaxSize(n).map(fn);
 }

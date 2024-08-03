@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {allDivisors} from "./factorization";
-import {filterUnique, sum} from "./sequences";
+import {filterUnique, numbersWithMaxSize, sum} from "./sequences";
 import {lexicographicPermutations} from "./strings";
 
 /**
@@ -44,10 +44,11 @@ export function collatz(n: number): number {
 
 /**
  * Calculates the factorial of a number as a bigint
+ * Note that this returns (correctly!) 1 for 0! and 1 for 1!
  */
 export function factorial(n: number): bigint {
     let res: bigint = 1n;
-    for (let i: number = 1; i <= n; i++) {
+    for (let i: number = 2; i <= n; i++) {
         res *= BigInt(i);
     }
     return res;
@@ -77,27 +78,25 @@ export function amicableMate(n: number): number {
     return -1;
 }
 
-
-
-
-
-
 /**
- * Checks if a given number (or string rep of a number) is 1-<length> pandigital
+ * Checks if a number is a pandigital
  */
-export function isPanDigital(n: number | string, includeZero: boolean = false): boolean {
+export function isPandigital(n: number): boolean;
+export function isPandigital(n: string): boolean;
+export function isPandigital(n: number | string): boolean {
     const digits: string[] = String(n).split("");
-    const uniqueDigits: string[] = filterUnique(digits); // many short filters is better using arrays then sets
-    return (includeZero || !digits.includes("0")) && digits.length == uniqueDigits.length;
+    if (digits.length > 9)
+        return false;
+    return numbersWithMaxSize(digits.length).reduce((acc: boolean, val: number) => acc && digits.includes(val.toString()), true);
 }
 
 /**
  * Generates all pandigital numbers of a given length
- * @param maxN the maximum number of digits
+ * @param n the number of digits
  * @param includeZero whether to include zero in the pandigital numbers
  */
-export function generateAllNPandigitals(maxN: number, includeZero: boolean = false): number[] {
-    const digits: number[] = Array.from({length: maxN}, (_, i: number) => i + 1);
+export function generateAllPandigitals(n: number, includeZero: boolean = false): number[] {
+    const digits: number[] = Array.from({length: n}, (_, i: number) => i + 1);
     if (includeZero) {
         digits.unshift(0);
     }
@@ -108,43 +107,93 @@ export function generateAllNPandigitals(maxN: number, includeZero: boolean = fal
  * Champernowne's constant for base 10
  * Returns string to be more precise
  */
-export function champernowneConstant(nBound?: number, dBound?: number): string {
-    assert(nBound || dBound, 'champernowneConstant');
+export function champernowneConstant(numberBound?: number, digitsBound?: number): string {
+    assert(numberBound || digitsBound, 'champernowneConstant');
     let res: string = '0.';
-    for (let i: number = 1; (nBound ? i <= nBound : true) && (dBound ? res.length - 2 < dBound : true); i++) {
+    for (let i: number = 1; (numberBound ? i <= numberBound : true) && (digitsBound ? res.length - 2 < digitsBound : true); i++) {
         res += i.toString();
     }
     return res;
 }
 
+/**
+ * Returns the nth triangle number
+ */
 export function triangleNumber(n: number): number {
     return n * (n + 1) / 2;
 }
 
-export function isTriangle(n: number): boolean {
+/**
+ * Checks if a number is a triangle number
+ */
+export function isTriangleNumber(n: number): boolean {
     return (Math.sqrt(1 + 8 * n) - 1) % 2 == 0;
 }
 
+/**
+ * Returns the nth pentagonal number
+ */
 export function pentagonalNumber(n: number): number {
     return n * (3 * n - 1) / 2;
 }
 
-export function isPentagonal(n: number): boolean {
+/**
+ * Checks if a number is a pentagonal number
+ */
+export function isPentagonalNumber(n: number): boolean {
     return (1 + Math.sqrt(1 + 24 * n)) % 6 == 0;
 }
 
+/**
+ * Returns the nth hexagonal number
+ */
 export function hexagonalNumber(n: number): number {
     return n * (2 * n - 1);
 }
 
-export function isHexagonal(n: number): boolean {
+/**
+ * Checks if a number is a hexagonal number
+ */
+export function isHexagonalNumber(n: number): boolean {
     return (1 + Math.sqrt(1 + 8 * n)) % 4 == 0;
 }
 
-export function generateFirstNFromFn(n: number, fn: (_: number) => number): number[] {
-    const res: number[] = [];
-    for (let i: number = 1; i <= n; i++) {
-        res.push(fn(i));
+/**
+ * Interfacing for the Fraction type
+ */
+export interface Fraction {
+    numerator: bigint;
+    denominator: bigint;
+}
+
+/**
+ * Sums two fractions without simplifying
+ */
+export function sumFractions(f1: Fraction, f2: Fraction): Fraction {
+    return {
+        numerator: f1.numerator * f2.denominator + f2.numerator * f1.denominator,
+        denominator: f1.denominator * f2.denominator
+    };
+}
+
+/**
+ * Calculates the nth denominator term of the expansion of the square root of 2
+ * Recursive.
+ */
+function _sqrt2ExpansionFraction(n: number): Fraction {
+    if (n == 0) {
+        return {numerator: 1n, denominator: 2n};
     }
-    return res;
+    const denominatorExpansion: Fraction = sumFractions({numerator: 2n, denominator: 1n}, _sqrt2ExpansionFraction(n - 1));
+    return {
+        numerator: denominatorExpansion.denominator,
+        denominator: denominatorExpansion.numerator,
+    };
+}
+
+/**
+ * Calculates the nth expansion of the square root of 2
+ */
+export function sqrt2Expansion(n: number): Fraction {
+    return sumFractions({numerator: 1n, denominator: 1n}, _sqrt2ExpansionFraction(n));
 }

@@ -1,8 +1,9 @@
-import {isPanDigital} from "../utilities/numbers";
+import {isPandigital} from "../utilities/numbers";
 
+// Average runtime ~1.5 ms
 export function run(): number {
     // We're looking for the largest pandigital number that can be formed by multiplying an integer by (1, 2, ..., n)
-    // So we are looking for n pandigital, s.t. there is an x<n and m > 1 s.t. n=C(x,(x(1..m)*)) where C is the concatenation function
+    // So we are looking for n pandigital, s.t. there is an x < n and m > 1 s.t. n = C(x, (x(1..m)*)) where C is the concatenation function
     // and * is the spread operator
     // From this we can derive the following bounds:
     // m=2: 5123 <= n <= 9876 (5000 contains zeros and 9999 contains only nines)
@@ -21,12 +22,12 @@ export function run(): number {
     let maxPandigital: number = -1;
 
     solutionSpace.forEach((bounds: [number, number], m: number) => {
-        for (let i = bounds[0]; i <= bounds[1]; i++) {
+        for (let i: number = bounds[0]; i <= bounds[1]; i++) {
             let res: string = '';
-            for (let j = 1; j <= m; j++) {
+            for (let j: number = 1; j <= m; j++) {
                 res += (i * j).toString();
             }
-            if(isPanDigital(res)) {
+            if (isPandigital(res)) {
                 maxPandigital = Math.max(maxPandigital, parseInt(res));
             }
         }

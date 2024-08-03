@@ -1,3 +1,6 @@
+import {forAll, numbersWithMaxSize} from "../utilities/sequences";
+
+// Average runtime ~50 ms
 export function run(): number {
     const maxMultiplier: number = 6;
     let base: number = 10;
@@ -7,11 +10,11 @@ export function run(): number {
     }
 
     let result: number | undefined = undefined;
+    const maxMultiplierArray: number[] = numbersWithMaxSize(maxMultiplier);
     do {
         for (let i: number = base; i < base * 10 / maxMultiplier; i++) {
             if (
-                Array.from({length: maxMultiplier}, (_, index) => i * (index + 1))
-                    .reduce((c, n) => c && sameDigits(i, n), true)
+                forAll(maxMultiplierArray.map((n: number) => i * n), (n: number) => sameDigits(i, n))
             ) {
                 result = i;
                 break;

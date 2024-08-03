@@ -1,19 +1,17 @@
-import {primesWithUpperBound} from "../utilities/factorization";
+import {isPrime, primesWithUpperBound} from "../utilities/factorization";
 
+// Average runtime ~99 ms
 export function run(): number {
-    // It is not the fastest, but it works
     const primes: number[] = primesWithUpperBound(1000000);
     const res: Set<number> = new Set<number>();
     for (const p of primes) {
-        if (!res.has(p)) {
-            const pStringArray: string[] = `${p}`.split("");
-            const allRotations: number[] = [];
-            for (let i: number = 0; i < pStringArray.length; i++) {
-                allRotations.push(Number(pStringArray.slice(i).join("") + pStringArray.slice(0, i).join("")));
-            }
-            if (allRotations.filter((v: number) => primes.includes(v)).length == allRotations.length) {
-                allRotations.forEach((t: number) => res.add(t));
-            }
+        const pStringArray: string[] = `${p}`.split("");
+        let failed: boolean = false;
+        for (let i: number = 0; i < pStringArray.length && !failed; i++) {
+            failed = !isPrime(Number(pStringArray.slice(i).join("") + pStringArray.slice(0, i).join("")));
+        }
+        if(!failed) {
+            res.add(p);
         }
     }
     return res.size;

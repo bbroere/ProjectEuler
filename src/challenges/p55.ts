@@ -1,9 +1,6 @@
 import {isPalindrome} from "../utilities/strings";
 
-function reverseAdd(n: number): number {
-    return n + parseInt(n.toString().split("").reverse().join(""));
-}
-
+// Average runtime ~14 ms
 export function run(): number {
     const maxIterationsInc: number = 50;
     const maxNumberExc: number = 10000;
@@ -14,7 +11,7 @@ export function run(): number {
         let j: number = 0;
         let n: number = i;
         do {
-            n = reverseAdd(n);
+            n = n + parseInt(n.toString().split("").reverse().join(""));
             lychrel = lychrel && !isPalindrome(n);
             j++;
         } while (j < maxIterationsInc && lychrel);
