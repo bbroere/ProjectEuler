@@ -1,17 +1,19 @@
-import {factorize} from "../utilities/primes";
+import {factorize} from "../utilities/factorization";
 
+// Average runtime ~330 ms
 export function run(): number {
     const min: number = 125000;
-    const prevFactors: Map<number, number> = new Map<number, number>([
-        [min, factorize(min).size],
-        [min + 1, factorize(min + 1).size],
-        [min + 2, factorize(min + 2).size],
-        [min + 3, factorize(min + 3).size],
-    ]);
-    let i: number = min + 3;
-    do {
-        i++;
-        prevFactors.set(i, factorize(i).size);
-    } while (![...prevFactors.values()].slice(-4).every((v: number): boolean => v == 4));
-    return i - 3;
+
+    let p1: [number, boolean] = [min, factorize(min).size == 4];
+    let p2: [number, boolean] = [min + 1, factorize(min + 1).size == 4];
+    let p3: [number, boolean] = [min + 2, factorize(min + 2).size == 4];
+    let p4: [number, boolean] = [min + 3, factorize(min + 3).size == 4];
+
+    while (!(p1[1] && p2[1] && p3[1] && p4[1])) {
+        p1 = p2;
+        p2 = p3;
+        p3 = p4;
+        p4 = [p4[0] + 1, factorize(p4[0] + 1).size == 4];
+    }
+    return p1[0];
 }

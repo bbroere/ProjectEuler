@@ -1,17 +1,19 @@
-import {generateAllNPandigitals} from "../utilities/numbers";
-import {sumWithConditionBigInt} from "../utilities/sequences";
+import {generateAllPandigitals} from "../utilities/numbers";
 
+// Average runtime ~1550 ms
 export function run(): number {
-    const solution = generateAllNPandigitals(9, true)
-        .map((p: number) => p.toString())
-        .filter((s: string): boolean => s.length == 10)
-        .filter((s: string): boolean => {
-            for (let i: number = 1; i <= 7; i++) {
-                if (parseInt(s.slice(i, i+3)) % [2, 3, 5, 7, 11, 13, 17][i - 1] != 0) {
-                    return false;
+    let result: number = 0;
+    generateAllPandigitals(9, true)
+        .forEach((p: number): void => {
+            if (Math.floor(p / 1000000000) == 0) {
+                return;
+            }
+            for (let i: number = 0; i <= 6; i++) {
+                if (Math.floor((p % 10 ** (i+3)) / (10 ** i)) % [17, 13, 11, 7, 5, 3, 2][i] != 0) {
+                    return;
                 }
             }
-            return true;
+            result += p;
         });
-    return solution.reduce((a: number, b: string): number => a + parseInt(b), 0);
+    return result;
 }

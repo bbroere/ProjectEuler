@@ -1,3 +1,4 @@
+// Average runtime ~11 ms
 export function run(): number {
     const max: number = 1000;
     const nofDigits: number = 10;

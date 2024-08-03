@@ -1,7 +1,7 @@
 import {groupBy} from "../utilities/sequences";
 import {pythagoreanTripletsWithSumBound} from "../utilities/geometry";
 
-
+// Average runtime ~0.35 ms
 export function run(): number {
     // Define S_p = { {a,b,c} | a, b, c natural numbers s.t. a^2+b^2=c^2 and a+b+c=p }
     // We're looking for p <= 1000 s.t. |S_p| >= |S_q| for all q <= 1000

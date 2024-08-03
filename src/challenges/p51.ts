@@ -1,6 +1,7 @@
-import {primesWithUpperBound} from "../utilities/primes";
+import {isPrime, primesWithUpperBound} from "../utilities/factorization";
 import {groupBy, mapMapValues} from "../utilities/sequences";
 
+// Average runtime ~35 ms
 export function run(): number {
     const maxForPrimes: number = 1000000;
     const familySize: number = 8;
@@ -12,7 +13,7 @@ export function run(): number {
         const charCountMap: Map<string, number> = mapMapValues(
             groupBy([...prime.toString()], (t: string) => t),
             (t: string[]) => t.length,
-            p => p[1].length >= minToChangeDigits
+            (p: [string, string[]]): boolean => p[1].length >= minToChangeDigits
         );
         for (let j: number = 0; j < charCountMap.size; j++) {
             const family: number[] = [];
@@ -22,7 +23,7 @@ export function run(): number {
                         Array.from(charCountMap.keys())[j], k.toString()
                     )
                 );
-                if ([...possNewPrime.toString()].length == [...prime.toString()].length && primes.includes(possNewPrime)) {
+                if (isPrime(possNewPrime) && [...possNewPrime.toString()].length == [...prime.toString()].length) {
                     family.push(possNewPrime);
                 }
             }

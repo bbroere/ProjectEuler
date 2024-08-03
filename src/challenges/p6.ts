@@ -1,9 +1,10 @@
+// Average runtime ~0.00017 ms
 export function run(): number {
-    let sum = 0;
-    let sq_sum = 0;
-    for (let i = 1; i < 101; i++) {
+    let sum: number = 0;
+    let sumSquares: number = 0;
+    for (let i: number = 1; i < 101; i++) {
         sum += i;
-        sq_sum += i * i;
+        sumSquares += i ** 2;
     }
-    return sum * sum - sq_sum;
+    return sum ** 2 - sumSquares;
 }

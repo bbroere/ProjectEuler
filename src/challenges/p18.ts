@@ -1,5 +1,11 @@
 import {input} from "../inputs/p18";
 
+// Average runtime ~1.3 ms
+export function run(): number {
+    const triangle: number[][] = input.split("\n").map((t: string) => t.split(" ").map(Number));
+    return findLongestPathSum(triangle);
+}
+
 function findLongestPathSum(triangle: number[][]): number {
     // Base case
     if (triangle.length == 2) {
@@ -14,9 +20,4 @@ function findLongestPathSum(triangle: number[][]): number {
         }
         return triangle[0][0] + Math.max(findLongestPathSum(leftTriangle), findLongestPathSum(rightTriangle));
     }
-}
-
-export function run(): number {
-    const triangle: number[][] = input.split("\n").map(t => t.split(" ").map(Number));
-    return findLongestPathSum(triangle);
 }

@@ -3,8 +3,10 @@ import {permutations} from "./sequences";
 /**
  * Checks if a string or number is a palindrome
  */
-export function checkPalindrome(s: string | number): boolean {
-    return `${s}` === `${s}`.split("").reverse().join("");
+export function isPalindrome(s: string): boolean;
+export function isPalindrome(n: number): boolean;
+export function isPalindrome(d: string | number): boolean {
+    return `${d}` === `${d}`.split("").reverse().join("");
 }
 
 /**
@@ -20,12 +22,5 @@ export function alphabeticalValue(s: string): number {
  * Recursively creates a list of all permutations of a set of strings
  */
 export function lexicographicPermutations(l: string[]): string[] {
-    return permutations(l.sort(), (a: string, b: string) => a + b);
-}
-
-/**
- * Reverses a string
- */
-export function reverse(s: string): string {
-    return s.split("").reverse().join("");
+    return permutations(l, (a: string, b: string) => a + b);
 }

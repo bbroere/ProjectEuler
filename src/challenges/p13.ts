@@ -1,6 +1,7 @@
 import {input} from "../inputs/p13";
-import {sumWithConditionBigInt} from "../utilities/sequences";
+import {sum} from "../utilities/sequences";
 
-export function run(): string {
-    return sumWithConditionBigInt(input.split("\n").map(BigInt)).toString().slice(0, 10);
+// Average runtime ~0.01 ms
+export function run(): number {
+    return parseInt(sum(input.split("\n").map(BigInt)).toString().slice(0, 10));
 }

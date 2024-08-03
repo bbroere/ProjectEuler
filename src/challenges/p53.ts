@@ -1,5 +1,6 @@
-import {factorial} from "../utilities/numbers";
+import {binomialCoefficient} from "../utilities/numbers";
 
+// Average runtime ~0.8 ms
 export function run(): number {
     // The problem here will be the large numbers that start to form by doing the multiplication in the factorials
     // For this we need smart division and multiplication or use bigints
@@ -18,7 +19,7 @@ export function run(): number {
     let res: number = 0;
     for (let n: number = startNInc; n <= endNInc; n++) {
         let k: number = 1;
-        while (factorial(n) / (factorial(k) * factorial(n - k)) <= boundaryEx) {
+        while (binomialCoefficient(n, k) <= boundaryEx) {
             k++;
         }
         res += (n + 1) - 2 * k;

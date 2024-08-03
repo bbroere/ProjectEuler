@@ -1,6 +1,7 @@
 import {amicableMate} from "../utilities/numbers";
-import {sumWithCondition} from "../utilities/sequences";
+import {sum} from "../utilities/sequences";
 
+// Average runtime ~52 ms
 export function run(): number {
     const a: number[] = [];
     for (let i: number = 2; i < 10000; i++) {
@@ -11,5 +12,5 @@ export function run(): number {
             }
         }
     }
-    return sumWithCondition(a);
+    return sum(a);
 }

@@ -14,14 +14,16 @@ function makeRunFile(): void {
         const nmbr: string = f.split(".")[0].slice(1);
         return `        case ${nmbr}:\n` +
             `            const s${nmbr} = p${nmbr}();\n` +
-            `            if(solutions.has(${nmbr})) {\n` +
-            `                s${nmbr} == solutions.get(${nmbr}) ? console.log(s${nmbr}, "Correct") : console.error(s${nmbr}, "Incorrect!");\n` +
-            `            } else {\n` +
-            `                console.log(s${nmbr}, "No solution to compare to");\n` +
+            `            if(!silent) {\n` +
+            `              if(solutions.has(${nmbr})) {\n` +
+            `                  s${nmbr} == solutions.get(${nmbr}) ? console.log(s${nmbr}, "Correct") : console.error(s${nmbr}, "Incorrect!");\n` +
+            `              } else {\n` +
+            `                  console.log(s${nmbr}, "No solution to compare to");\n` +
+            `              }\n` +
             `            }\n` +
             '            break;\n';
     });
-    content += 'export function runChallenge(challenge: number): void {\n' +
+    content += 'export function runChallenge(challenge: number, silent: boolean  = false): void {\n' +
         '    switch (challenge) {\n' +
         casesStrings.join("") +
         '    }\n' +
