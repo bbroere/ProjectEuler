@@ -7,7 +7,7 @@ function genProblem(n: string): void {
         '// Average runtime ~??? ms\n' +
         'export function run(): number {\n' +
         '    return undefined;\n' +
-        '};';
+        '}\n';
     writeFileSync(`challenges/p${n}.ts`, content, {encoding: 'utf8'});
 }
 

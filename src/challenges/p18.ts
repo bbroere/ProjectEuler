@@ -1,23 +1,16 @@
 import {input} from "../inputs/p18";
 
-// Average runtime ~1.3 ms
+// Average runtime ~0.014 ms
 export function run(): number {
     const triangle: number[][] = input.split("\n").map((t: string) => t.split(" ").map(Number));
-    return findLongestPathSum(triangle);
+    return p18Public(triangle);
 }
 
-function findLongestPathSum(triangle: number[][]): number {
-    // Base case
-    if (triangle.length == 2) {
-        return triangle[0][0] + Math.max(...triangle[1]);
-    } else {
-        // Make it one smaller and determine max of the sub triangles
-        const leftTriangle: number[][] = [];
-        const rightTriangle: number[][] = [];
-        for (const row of triangle.slice(1)) {
-            leftTriangle.push(row.slice(0, row.length - 1));
-            rightTriangle.push(row.slice(1));
+export function p18Public(triangle: number[][]): number{
+    for (let i: number = 1; i < triangle.length; i++) {
+        for (let j: number = 0; j < triangle[i].length; j++) {
+            triangle[i][j] += Math.max(triangle[i - 1][j - 1] || 0, triangle[i - 1][j] || 0);
         }
-        return triangle[0][0] + Math.max(findLongestPathSum(leftTriangle), findLongestPathSum(rightTriangle));
     }
+    return Math.max(...triangle[triangle.length - 1]);
 }
