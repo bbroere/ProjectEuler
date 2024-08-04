@@ -10,7 +10,7 @@ export function isPalindrome(d: string | number): boolean {
 }
 
 /**
- * Calculates the alphabetical value of a string
+ * Calculates the alphabetical value of a string of uppercase characters
  */
 export function alphabeticalValue(s: string): number {
     return s.split("")

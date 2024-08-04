@@ -1,6 +1,6 @@
 import assert from "node:assert";
 import {allDivisors} from "./factorization";
-import {filterUnique, numbersWithMaxSize, sum} from "./sequences";
+import {numbersWithMaxSize, sum} from "./sequences";
 import {lexicographicPermutations} from "./strings";
 
 /**
@@ -169,7 +169,8 @@ export interface Fraction {
 /**
  * Sums two fractions without simplifying
  */
-export function sumFractions(f1: Fraction, f2: Fraction): Fraction {
+export
+function sumFractions(f1: Fraction, f2: Fraction): Fraction {
     return {
         numerator: f1.numerator * f2.denominator + f2.numerator * f1.denominator,
         denominator: f1.denominator * f2.denominator

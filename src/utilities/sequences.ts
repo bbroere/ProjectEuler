@@ -71,8 +71,10 @@ export function groupBy<T, K>(array: T[], keyFn: (t: T) => K): Map<K, T[]> {
 /**
  * Checks if all elements in a list satisfy a given function
  */
-export function forAll<T>(list: T[], fn: (_: T) => boolean): boolean {
-    return list.reduce((c, n) => c && fn(n), true);
+export function forAll<T>(list: T[], fn: (_: T) => boolean): boolean
+export function forAll<T>(list: T[], fn: (_: T, index: number) => boolean): boolean
+export function forAll<T>(list: T[], fn: ((_: T) => boolean) | ((_: T, index: number) => boolean)): boolean {
+    return list.reduce((c: boolean, n: T, i: number): boolean => c && fn(n, i), true);
 }
 
 /**
