@@ -117,45 +117,19 @@ export function champernowneConstant(numberBound?: number, digitsBound?: number)
 }
 
 /**
- * Returns the nth triangle number
+ * Returns the nth polygonal number function
  */
-export function triangleNumber(n: number): number {
-    return n * (n + 1) / 2;
+export function polygonalNumber(s: number): (_: number) => number {
+    assert(s > 2, 'polygonalNumber');
+    return (n: number) => n + ((s - 2) * (n - 1) * n / 2);
 }
 
 /**
- * Checks if a number is a triangle number
+ * Checks if a number is a polygonal number
  */
-export function isTriangleNumber(n: number): boolean {
-    return (Math.sqrt(1 + 8 * n) - 1) % 2 == 0;
-}
-
-/**
- * Returns the nth pentagonal number
- */
-export function pentagonalNumber(n: number): number {
-    return n * (3 * n - 1) / 2;
-}
-
-/**
- * Checks if a number is a pentagonal number
- */
-export function isPentagonalNumber(n: number): boolean {
-    return (1 + Math.sqrt(1 + 24 * n)) % 6 == 0;
-}
-
-/**
- * Returns the nth hexagonal number
- */
-export function hexagonalNumber(n: number): number {
-    return n * (2 * n - 1);
-}
-
-/**
- * Checks if a number is a hexagonal number
- */
-export function isHexagonalNumber(n: number): boolean {
-    return (1 + Math.sqrt(1 + 8 * n)) % 4 == 0;
+export function isSPolygonal(s: number, x: number): boolean {
+    assert(s > 2 && x > 0, 'isSPolygonal');
+    return ((Math.sqrt(8 * (s - 2) * x + (s - 4) * (s - 4)) + (s - 4)) / (2 * s - 4)) % 1 == 0;
 }
 
 /**
@@ -169,8 +143,7 @@ export interface Fraction {
 /**
  * Sums two fractions without simplifying
  */
-export
-function sumFractions(f1: Fraction, f2: Fraction): Fraction {
+export function sumFractions(f1: Fraction, f2: Fraction): Fraction {
     return {
         numerator: f1.numerator * f2.denominator + f2.numerator * f1.denominator,
         denominator: f1.denominator * f2.denominator
@@ -185,7 +158,10 @@ function _sqrt2ExpansionFraction(n: number): Fraction {
     if (n == 0) {
         return {numerator: 1n, denominator: 2n};
     }
-    const denominatorExpansion: Fraction = sumFractions({numerator: 2n, denominator: 1n}, _sqrt2ExpansionFraction(n - 1));
+    const denominatorExpansion: Fraction = sumFractions({
+        numerator: 2n,
+        denominator: 1n
+    }, _sqrt2ExpansionFraction(n - 1));
     return {
         numerator: denominatorExpansion.denominator,
         denominator: denominatorExpansion.numerator,
