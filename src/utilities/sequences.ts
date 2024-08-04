@@ -90,3 +90,16 @@ export function mapMapValues<K, V, R>(map: Map<K, V>, fn: (_: V) => R, filterOpt
 export function generateFirstN<T>(n: number, fn: (_: number) => T): T[] {
     return numbersWithMaxSize(n).map(fn);
 }
+
+/**
+ * Generates the first n elements of a sequence based on a function, starting from 1, while a condition is met
+ */
+export function generateWhile<T>(fn: (_: number) => T, condition: (_: T) => boolean): T[] {
+    let i: number = 1;
+    const res: T[] = [];
+    while (condition(fn(i))) {
+        res.push(fn(i));
+        i++;
+    }
+    return res;
+}
