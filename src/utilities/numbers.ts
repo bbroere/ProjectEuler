@@ -6,30 +6,57 @@ import {lexicographicPermutations} from "./strings";
 /**
  * Calculates LCM of a list of arguments
  */
-export function lcm(...args: number[]): number {
+export function lcm(...args: number[]): number
+export function lcm(...args: bigint[]): bigint
+export function lcm(...args: number[] | bigint[]): number | bigint {
     assert(args.length > 1, 'lcm');
-    let a: number = args[0];
-    for (let i: number = 1; i < args.length; i++) {
-        let a_r: number = a;
-        let b_r: number = args[i];
-        while (a_r != b_r) {
-            if (a_r < b_r) {
-                a_r += a;
-            } else {
-                b_r += args[i];
+    switch (typeof args[0]) {
+        case 'number':
+            let a: number = (args[0] as number);
+            for (let i: number = 1; i < args.length; i++) {
+                let a_r: number = a;
+                let b_r: number = (args[i] as number);
+                while (a_r != b_r) {
+                    if (a_r < b_r) {
+                        a_r += a;
+                    } else {
+                        b_r += (args[i] as number);
+                    }
+                }
+                a = a_r;
             }
-        }
-        a = a_r;
+            return a;
+        case 'bigint':
+            let b: bigint = (args[0] as bigint);
+            for (let i: number = 1; i < args.length; i++) {
+                let a_r: bigint = b;
+                let b_r: bigint = (args[i] as bigint);
+                while (a_r != b_r) {
+                    if (a_r < b_r) {
+                        a_r += b;
+                    } else {
+                        b_r += (args[i] as bigint);
+                    }
+                }
+                b = a_r;
+            }
+            return b;
     }
-    return a;
 }
 
 /**
  * Returns the GCD of a list of arguments, based on the GCD formula
  */
-export function gcd(...args: number[]): number {
+export function gcd(...args: number[]): number;
+export function gcd(...args: bigint[]): bigint;
+export function gcd(...args: number[] | bigint[]): number | bigint {
     assert(args.length > 1, 'gcd');
-    return args.reduce((c: number, n: number) => c * n, 1) / lcm(...args);
+    switch (typeof args[0]) {
+        case 'number':
+            return (args as number[]).reduce((c: number, n: number) => c * n, 1) / lcm(...(args as number[]));
+        case 'bigint':
+            return (args as bigint[]).reduce((c: bigint, n: bigint) => c * n, 1n) / lcm(...(args as bigint[]));
+    }
 }
 
 /**
@@ -138,6 +165,17 @@ export function isSPolygonal(s: number, x: number): boolean {
 export interface Fraction {
     numerator: bigint;
     denominator: bigint;
+}
+
+/**
+ * Reduces a fraction to its simplest form
+ */
+export function reduceFraction(f: Fraction): Fraction {
+    const hcf: bigint = f.denominator > f.numerator ? gcd(f.denominator, f.numerator) : gcd(f.numerator, f.denominator);
+    return {
+        numerator: f.numerator / hcf,
+        denominator: f.denominator / hcf
+    };
 }
 
 /**
