@@ -15,7 +15,7 @@ export function run(): number {
     const set: number[] = [1, 2, 5, 10, 20, 50, 100, 200];
     const goal: number = 200;
     // Solution for no coins
-    const solution: number[] = numbersWithMaxSize(goal + 1).map(t => 0);
+    const solution: number[] = numbersWithMaxSize(goal + 1).fill(0);
     solution[0] = 1; // 0 can be made 1 way
     // Now loop over all coins
     set.forEach((coin: number): void => {

@@ -212,3 +212,46 @@ function _sqrt2ExpansionFraction(n: number): Fraction {
 export function sqrt2Expansion(n: number): Fraction {
     return sumFractions({numerator: 1n, denominator: 1n}, _sqrt2ExpansionFraction(n));
 }
+
+/**
+ * Calculates the number of partition of a number
+ */
+export function partitionNumber(n: number): number {
+    assert(n >= 0, 'partitionNumber');
+    // We can use the pentagonal number theorem to find the solution
+    // p(n) = sum_(k!=0) (-1)^(k-1) * p(n - g(k)) = sum_(k!=0) (-1)^(k-1) * p(n - k(3k-1)/2)
+    // where g(k) = k(3k-1)/2 is the k-th pentagonal number (polygonalNumber(5)(k), also works on negatives)
+    // Bote that as soon as (n - k(3k-1)/2) is negative, we can stop the sum as the rest of the terms will be 0
+
+    // Base cases
+    if (n < 0) return 0;
+    if (n === 0) return 1;
+    // Generate the pentagonal number function
+    const pNum = polygonalNumber(5);
+    // Store previous results
+    const results: number[] = numbersWithMaxSize(n + 1).fill(0);
+    results[0] = 1;
+    // Now loop from 1 to n to calculate what is needed (and possibly more)
+    for (let i: number = 1; i <= n; i++) {
+        let total: number = 0;
+        let k: number = 1;
+        let pent1: number = pNum(k);
+        let pent2: number = pNum(-k);
+
+        while (pent1 <= i || pent2 <= i) {
+            const sign: number = (k % 2 !== 0) ? 1 : -1;
+            if (pent1 <= i)
+                total += sign * results[i - pent1];
+            if (pent2 <= i)
+                total += sign * results[i - pent2];
+            k++;
+            pent1 = pNum(k);
+            pent2 = pNum(-k);
+        }
+
+        results[i] = total;
+    }
+
+    return results[n];
+}
+
