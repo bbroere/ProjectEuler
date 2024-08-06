@@ -24,3 +24,25 @@ export function alphabeticalValue(s: string): number {
 export function lexicographicPermutations(l: string[]): string[] {
     return permutations(l, (a: string, b: string) => a + b);
 }
+
+/**
+ * Checks if two strings are permutations of each other
+ */
+export function arePermutations(a: string, b: string): boolean {
+    return a.split("").sort().join("") === b.split("").sort().join("");
+}
+
+/**
+ * Makes a list of all permutations of a given list with a given operation
+ */
+export function allPermutations(n: number): number[]
+export function allPermutations(s: string): string[]
+export function allPermutations(input: string | number): string[] | number[] {
+    const res: string[] = permutations(`${input}`.split(""), (a: string, b: string) => a + b);
+    switch (typeof input) {
+        case "number":
+            return res.map((s: string) => parseInt(s));
+        case "string":
+            return res;
+    }
+}

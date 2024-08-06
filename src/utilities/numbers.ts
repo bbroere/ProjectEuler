@@ -6,56 +6,32 @@ import {lexicographicPermutations} from "./strings";
 /**
  * Calculates LCM of a list of arguments
  */
-export function lcm(...args: number[]): number
-export function lcm(...args: bigint[]): bigint
-export function lcm(...args: number[] | bigint[]): number | bigint {
-    assert(args.length > 1, 'lcm');
-    switch (typeof args[0]) {
+export function lcm(a: number, b: number): number;
+export function lcm(a: bigint, b: bigint): bigint;
+export function lcm(a: number | bigint, b: number | bigint): number | bigint {
+    switch (typeof a) {
         case 'number':
-            let a: number = (args[0] as number);
-            for (let i: number = 1; i < args.length; i++) {
-                let a_r: number = a;
-                let b_r: number = (args[i] as number);
-                while (a_r != b_r) {
-                    if (a_r < b_r) {
-                        a_r += a;
-                    } else {
-                        b_r += (args[i] as number);
-                    }
-                }
-                a = a_r;
-            }
-            return a;
+            const _numLCM = (a: number, b: number): number => a * b / gcd(a, b);
+            return _numLCM(a as number, b as number);
         case 'bigint':
-            let b: bigint = (args[0] as bigint);
-            for (let i: number = 1; i < args.length; i++) {
-                let a_r: bigint = b;
-                let b_r: bigint = (args[i] as bigint);
-                while (a_r != b_r) {
-                    if (a_r < b_r) {
-                        a_r += b;
-                    } else {
-                        b_r += (args[i] as bigint);
-                    }
-                }
-                b = a_r;
-            }
-            return b;
+            const _bigLCM = (a: bigint, b: bigint): bigint => a * b / gcd(a, b);
+            return _bigLCM(a as bigint, b as bigint);
     }
 }
 
 /**
  * Returns the GCD of a list of arguments, based on the GCD formula
  */
-export function gcd(...args: number[]): number;
-export function gcd(...args: bigint[]): bigint;
-export function gcd(...args: number[] | bigint[]): number | bigint {
-    assert(args.length > 1, 'gcd');
-    switch (typeof args[0]) {
+export function gcd(a: number, b: number): number;
+export function gcd(a: bigint, b: bigint): bigint;
+export function gcd(a: number | bigint, b: number | bigint): number | bigint {
+    switch (typeof a) {
         case 'number':
-            return (args as number[]).reduce((c: number, n: number) => c * n, 1) / lcm(...(args as number[]));
+            const _numGCD = (a: number, b: number): number => b > a ? _numGCD(b, a) : !b ? a : _numGCD(b, a % b);
+            return _numGCD(a as number, b as number);
         case 'bigint':
-            return (args as bigint[]).reduce((c: bigint, n: bigint) => c * n, 1n) / lcm(...(args as bigint[]));
+            const _bigGCD = (a: bigint, b: bigint): bigint => b > a ? _bigGCD(b, a) : !b ? a : _bigGCD(b, a % b);
+            return _bigGCD(a as bigint, b as bigint);
     }
 }
 
@@ -167,6 +143,11 @@ export interface Fraction {
     denominator: bigint;
 }
 
+export interface ContinuedFraction {
+    base: number;
+    expansion: number[];
+}
+
 /**
  * Reduces a fraction to its simplest form
  */
@@ -189,28 +170,26 @@ export function sumFractions(f1: Fraction, f2: Fraction): Fraction {
 }
 
 /**
- * Calculates the nth denominator term of the expansion of the square root of 2
- * Recursive.
+ * Evaluates a continued fraction expansion up to n
  */
-function _sqrt2ExpansionFraction(n: number): Fraction {
-    if (n == 0) {
-        return {numerator: 1n, denominator: 2n};
-    }
-    const denominatorExpansion: Fraction = sumFractions({
-        numerator: 2n,
-        denominator: 1n
-    }, _sqrt2ExpansionFraction(n - 1));
-    return {
-        numerator: denominatorExpansion.denominator,
-        denominator: denominatorExpansion.numerator,
-    };
-}
+export function continuedFractionExpansion(n: number, cf: ContinuedFraction): Fraction {
+    const baseTerm: Fraction = {numerator: BigInt(cf.base), denominator: 1n};
+    if (n === 0)
+        return baseTerm;
 
-/**
- * Calculates the nth expansion of the square root of 2
- */
-export function sqrt2Expansion(n: number): Fraction {
-    return sumFractions({numerator: 1n, denominator: 1n}, _sqrt2ExpansionFraction(n));
+    let term: Fraction = {numerator: BigInt(cf.expansion[(n - 1) % cf.expansion.length]), denominator: 1n};
+
+    for (let i = n - 2; i >= 0; i--) {
+        term = sumFractions({
+            numerator: BigInt(cf.expansion[i % cf.expansion.length]),
+            denominator: 1n
+        }, {numerator: term.denominator, denominator: term.numerator});
+    }
+
+    return sumFractions(baseTerm, {
+        numerator: term.denominator,
+        denominator: term.numerator
+    });
 }
 
 /**
