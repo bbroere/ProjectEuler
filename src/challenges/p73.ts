@@ -1,6 +1,7 @@
 // Average runtime ~??? ms
 import {Fraction, reduceFraction} from "../utilities/numbers";
 
+// Work in progress
 export function run(): number {
     const foundFractions: Fraction[] = [];
     for (let d: number = 5; d <= 12000; d++) {
@@ -17,6 +18,6 @@ export function run(): number {
             distinctFractions.push(f);
     });
     return distinctFractions.length;
-    //7295372
-    //11996000
+    //7295372 correct
+    //11996000 finding
 }

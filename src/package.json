@@ -8,6 +8,7 @@
     "lint:fix": "npm run lint -- --fix",
     "compile": "npm run prep && npx tsc",
     "start": "npm run compile && node dist/index.js",
+    "startAll": "npm run compile && node dist/index.js all",
     "time": "npm run compile && node dist/time.js",
     "testing": "npm run compile && node dist/testing/index.js"
   },
