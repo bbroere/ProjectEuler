@@ -193,32 +193,32 @@ export function continuedFractionExpansion(n: number, cf: ContinuedFraction): Fr
 }
 
 /**
- * Calculates the number of partition of a number
+ * Calculates the partition numbers with a given upper bound
  */
-export function partitionNumber(n: number): number {
-    assert(n >= 0, 'partitionNumber');
+export function partitionNumbers(upperBoundInc: number): bigint[] {
+    assert(upperBoundInc >= 0, 'partitionNumber');
     // We can use the pentagonal number theorem to find the solution
     // p(n) = sum_(k!=0) (-1)^(k-1) * p(n - g(k)) = sum_(k!=0) (-1)^(k-1) * p(n - k(3k-1)/2)
     // where g(k) = k(3k-1)/2 is the k-th pentagonal number (polygonalNumber(5)(k), also works on negatives)
     // Bote that as soon as (n - k(3k-1)/2) is negative, we can stop the sum as the rest of the terms will be 0
 
     // Base cases
-    if (n < 0) return 0;
-    if (n === 0) return 1;
+    if (upperBoundInc < 0) return [0n];
+    if (upperBoundInc === 0) return [1n];
     // Generate the pentagonal number function
     const pNum = polygonalNumber(5);
     // Store previous results
-    const results: number[] = numbersWithMaxSize(n + 1).fill(0);
-    results[0] = 1;
+    const results: bigint[] = numbersWithMaxSize(upperBoundInc + 1).map(t => 0n);
+    results[0] = 1n;
     // Now loop from 1 to n to calculate what is needed (and possibly more)
-    for (let i: number = 1; i <= n; i++) {
-        let total: number = 0;
+    for (let i: number = 1; i <= upperBoundInc; i++) {
+        let total: bigint = 0n;
         let k: number = 1;
         let pent1: number = pNum(k);
         let pent2: number = pNum(-k);
 
         while (pent1 <= i || pent2 <= i) {
-            const sign: number = (k % 2 !== 0) ? 1 : -1;
+            const sign: bigint = (k % 2 !== 0) ? 1n : -1n;
             if (pent1 <= i)
                 total += sign * results[i - pent1];
             if (pent2 <= i)
@@ -231,6 +231,13 @@ export function partitionNumber(n: number): number {
         results[i] = total;
     }
 
-    return results[n];
+    return results;
+}
+
+/**
+ * Calculates the partition number for a given number
+ */
+export function partitionNumber(n: number): bigint {
+    return partitionNumbers(n).slice(-1)[0];
 }
 
