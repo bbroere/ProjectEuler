@@ -1,13 +1,10 @@
-import {testInput} from "../inputs/p81"; // Same input
+import {input} from "../inputs/p81"; // Same input
 
-// Average runtime ~??? ms
+// Average runtime ~0.45 ms
 export function run(): number {
-    const runningResult: number[][] = testInput;
+    const runningResult: number[][] = input;
 
-    // The first column is trivial, just sum the first column from the first upto the current row
-    for (let rowIndex: number = 1; rowIndex < runningResult.length; rowIndex++)
-        runningResult[rowIndex][0] += runningResult[rowIndex - 1][0];
-
+    // The first column is trivial, just do nothing!
     for (let columnIndex: number = 1; columnIndex < runningResult[0].length; columnIndex++) {
         for (let rowIndex: number = 0; rowIndex < runningResult.length; rowIndex++) {
             // Start of with the current minimum being the sum of the current cell and the cell to the left
@@ -24,7 +21,5 @@ export function run(): number {
             runningResult[rowIndex][columnIndex] = currentMin;
         }
     }
-    console.log(runningResult);
-
-    return runningResult[0].slice(-1)[0];
+    return runningResult.map((row: number[]) => row.slice(-1)[0]).reduce((a: number, b: number) => Math.min(a, b));
 }
