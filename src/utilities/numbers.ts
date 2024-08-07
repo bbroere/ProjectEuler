@@ -241,3 +241,21 @@ export function partitionNumber(n: number): bigint {
     return partitionNumbers(n).slice(-1)[0];
 }
 
+/**
+ * Calculates the square root of a bigint
+ */
+export function bigintSqrt(n: bigint): bigint {
+    assert(n >= 0n, 'bigintSqrt');
+    if (n < 2n)
+        return n;
+
+    // Newton's method
+    function iteration(m: bigint, x0: bigint) {
+        const x1 = ((m / x0) + x0) >> 1n;
+        if (x0 === x1 || x0 === (x1 - 1n))
+            return x0;
+        return iteration(m, x1);
+    }
+
+    return iteration(n, 1n);
+}
