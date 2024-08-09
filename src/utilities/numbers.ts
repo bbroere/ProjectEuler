@@ -148,6 +148,9 @@ export interface ContinuedFraction {
     expansion: number[];
 }
 
+export interface InfiniteContinuedFraction extends ContinuedFraction {
+}
+
 /**
  * Reduces a fraction to its simplest form
  */
@@ -170,18 +173,18 @@ export function sumFractions(f1: Fraction, f2: Fraction): Fraction {
 }
 
 /**
- * Evaluates a continued fraction expansion up to n
+ * Evaluates an infinite continued fraction expansion up to n
  */
-export function continuedFractionExpansion(n: number, cf: ContinuedFraction): Fraction {
-    const baseTerm: Fraction = {numerator: BigInt(cf.base), denominator: 1n};
+export function continuedFractionExpansion(n: number, icf: InfiniteContinuedFraction): Fraction {
+    const baseTerm: Fraction = {numerator: BigInt(icf.base), denominator: 1n};
     if (n === 0)
         return baseTerm;
 
-    let term: Fraction = {numerator: BigInt(cf.expansion[(n - 1) % cf.expansion.length]), denominator: 1n};
+    let term: Fraction = {numerator: BigInt(icf.expansion[(n - 1) % icf.expansion.length]), denominator: 1n};
 
     for (let i = n - 2; i >= 0; i--) {
         term = sumFractions({
-            numerator: BigInt(cf.expansion[i % cf.expansion.length]),
+            numerator: BigInt(icf.expansion[i % icf.expansion.length]),
             denominator: 1n
         }, {numerator: term.denominator, denominator: term.numerator});
     }
@@ -190,6 +193,47 @@ export function continuedFractionExpansion(n: number, cf: ContinuedFraction): Fr
         numerator: term.denominator,
         denominator: term.numerator
     });
+}
+
+/**
+ * Calculates the infinite continued fraction notation of a square root
+ */
+export function infiniteContinuedFractionNotationSqrt(n: number): InfiniteContinuedFraction {
+    if (Number.isInteger(Math.sqrt(n)))
+        return {base: Math.sqrt(n), expansion: []};
+
+    // Step 1: Initialize variables
+    const m0 = 0;
+    const d0 = 1;
+    const a0 = Math.floor(Math.sqrt(n)); // The integer part, i.e. highest t s.t. t^2 <= n
+    const a = a0;
+
+    const continuedFraction: number[] = [a0];
+
+    let mn = m0;
+    let dn = d0;
+    let an = a;
+
+    // A map to detect the cycle
+    const seen: Map<string, boolean> = new Map<string, boolean>();
+
+    // This will always terminate
+    while (true) {
+        // Step 2: Update variables using the recurrence relations
+        mn = dn * an - mn;
+        dn = (n - mn * mn) / dn;
+        an = Math.floor((a0 + mn) / dn);
+        // Mark the key as the combination of the three variables as this defines the point where we get the same value
+        // Hence we found the endpoint for the cyclic part
+        const key = `${mn},${dn},${an}`;
+        if (seen[key])
+            break;
+        // If this is a new value, add it to the continued fraction
+        seen[key] = true;
+        continuedFraction.push(an);
+    }
+
+    return {base: continuedFraction[0], expansion: continuedFraction.slice(1)};
 }
 
 /**
@@ -258,4 +302,44 @@ export function bigintSqrt(n: bigint): bigint {
     }
 
     return iteration(n, 1n);
+}
+
+/**
+ * Calculates the minimal solution in x to the Pell's equation x^2 - D * y^2 = 1 using continued fractions
+ */
+export function minimalPellSolution(D: number): [bigint, bigint] | undefined {
+    const bigIntD: bigint = BigInt(D);
+    if (Number.isInteger(Math.sqrt(D)))
+        return undefined;
+    // Get the continued fraction of the square root of D
+    const cf: InfiniteContinuedFraction = infiniteContinuedFractionNotationSqrt(D);
+    // Eventually the convergent sequence of infinite fraction evaluations should give a solution.
+    // As these fractions are simplified, this should also be the minimal solution (x and y being as small as possible)
+    let [x, y]: [bigint, bigint] = [0n, 0n];
+    let n: number = 0;
+    do {
+        n++;
+        const f = continuedFractionExpansion(n, cf);
+        [x, y] = [f.numerator, f.denominator];
+    } while (x * x - bigIntD * y * y != 1n);
+    return [x, y];
+}
+
+/**
+ * Generates a list of the number of proper divisors of each of the numbers 0..boundInc for given bound
+ */
+export function eulerPhiList(boundInc: number): number[] {
+    // We use the sum property of the Euler's Totient function, which states that n = sum_{d|n}phi(d)
+    const phis: number[] = [0, ...numbersWithMaxSize(boundInc)];
+    // Every number n > 1 has at most n-1 proper divisors, so phi(n) <= n-1
+    for (let i: number = 2; i <= boundInc; i++) {
+        phis[i] = i - 1;
+    }
+    // Now loop and subtract phi(i) from all multiples of i
+    for (let i: number = 2; i <= boundInc; i++) {
+        for (let j: number = 2 * i; j <= boundInc; j += i) {
+            phis[j] -= phis[i];
+        }
+    }
+    return phis;
 }

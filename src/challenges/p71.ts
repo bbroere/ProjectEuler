@@ -1,13 +1,15 @@
-import {Fraction, reduceFraction} from "../utilities/numbers";
+import {Fraction, gcd} from "../utilities/numbers";
 
-// Average runtime ~400 ms (needs improvement)
+// Average runtime ~75 ms
 export function run(): bigint {
-    const fractions: Fraction[] = [];
+    let currentMax: Fraction = {numerator: 0n, denominator: 1n};
     const border: number = 1000000;
-    for (let d: number = 1; d < border + 1; d++) {
-        if (d % 7 === 0)
+    for (let d: bigint = 1n; d <= border; d++) {
+        if (d % 7n === 0n) // otherwise we find 3/7
             continue;
-        fractions.push({numerator: BigInt(Math.floor(d * 3 / 7)), denominator: BigInt(d)});
+        const n: bigint = d * 3n / 7n;
+        if (gcd(n, d) === 1n && n * currentMax.denominator > currentMax.numerator * d)
+            currentMax = {numerator: BigInt(n), denominator: BigInt(d)};
     }
-    return reduceFraction(fractions.sort((a: Fraction, b: Fraction): number => Number(b.numerator) / Number(b.denominator) < Number(a.numerator) / Number(a.denominator) ? -1 : 1)[0]).numerator;
+    return currentMax.numerator;
 }

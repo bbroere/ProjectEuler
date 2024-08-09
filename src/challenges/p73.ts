@@ -1,23 +1,18 @@
-// Average runtime ~??? ms
-import {Fraction, reduceFraction} from "../utilities/numbers";
+import {gcd} from "../utilities/numbers";
 
-// Work in progress
+// Average runtime ~800 ms
 export function run(): number {
-    const foundFractions: Fraction[] = [];
-    for (let d: number = 5; d <= 12000; d++) {
-        for (let n: number = Math.floor(d / 3) + 1; n <= Math.ceil(d / 2) - 1; n++) {
-            if ((d / n) % 1 == 0)
-                continue;
-            foundFractions.push(reduceFraction({numerator: BigInt(n), denominator: BigInt(d)}));
-        }
+    const upperBoundInc: number = 12_000;
+    let result: number = 0;
+    // We can skip d=1 (only has 1/1), d=2 (only has 1/2, which is a bound) and d=3 (only has 1/3, which is a bound)
+    for (let d = 4; d <= upperBoundInc; d++) {
+        const leftBound: number = Math.ceil(d / 3);
+        const rightBound: number = Math.floor(d / 2);
+        let currentSum = 0;
+        for (let n = leftBound; n <= rightBound; n++)
+            if (gcd(n, d) === 1)
+                currentSum++;
+        result += currentSum;
     }
-    const distinctFractions: Fraction[] = [];
-    foundFractions.forEach((f, i) => {
-        i % 100000 == 0 ? console.log(100 * i / foundFractions.length) : {};
-        if(!distinctFractions.some(f2 => f2.numerator === f.numerator && f2.denominator === f.denominator))
-            distinctFractions.push(f);
-    });
-    return distinctFractions.length;
-    //7295372 correct
-    //11996000 finding
+    return result;
 }

@@ -67,7 +67,10 @@ export function numberOfDivisors(n: number): number {
  * Returns all divisors of a given number n by factorizing, and then constructing the divisors
  */
 export function allDivisors(n: number): number[] {
-    return _allDivisors([...factorize(n).entries()]);
+    const factors: Map<number, number> = factorize(n);
+    if(factors.size == 0)
+        return [1];
+    return _allDivisors([...factors.entries()]);
 }
 
 /**
