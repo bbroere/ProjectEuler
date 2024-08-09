@@ -8,7 +8,7 @@ function genProblem(n: string): void {
     https.get(`https://projecteuler.net/minimal=${n}`).on('response', (res: IncomingMessage) =>
         res.on('data', problem => {
             const date = new Date().toISOString().split('T')[0];
-            const sourcesExtended = problem.toString().replaceAll('="/resources', '="https://projecteuler.net/resources').replace(/\n+$/, "");
+            const sourcesExtended = problem.toString().replaceAll('="resources', '="https://projecteuler.net/resources').replace(/\n+$/, "");
             const problemJavaDoc =
                 [
                     "/**",
