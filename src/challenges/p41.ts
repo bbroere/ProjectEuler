@@ -1,7 +1,13 @@
 import {generateAllPandigitals} from "../utilities/numbers";
 import {allDivisors} from "../utilities/factorization";
 
-// Average runtime ~185 ms
+/**
+ * <p>We shall say that an $n$-digit number is pandigital if it makes use of all the digits $1$ to $n$ exactly once. For example, $2143$ is a $4$-digit pandigital and is also prime.</p>
+ * <p>What is the largest $n$-digit pandigital prime that exists?</p>
+ *
+ * <p>Generated on 2024-08-09 from <a href='https://projecteuler.net/problem=41'>source</a></p>
+ * <p><i><b>Average runtime ~185 ms</b></i></p>
+ */
 export function run(): number {
     // Not very clean, but effective
     return [

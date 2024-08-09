@@ -1,4 +1,12 @@
-// Average runtime ~0.07 ms
+/**
+ * <p>By counting carefully it can be seen that a rectangular grid measuring $3$ by $2$ contains eighteen rectangles:</p>
+ * <div class="center">
+ * <img src="https://projecteuler.net/resources/images/0085.png?1678992052" class="dark_img" alt=""></div>
+ * <p>Although there exists no rectangular grid that contains exactly two million rectangles, find the area of the grid with the nearest solution.</p>
+ *
+ * <p>Generated on 2024-08-09 from <a href='https://projecteuler.net/problem=85'>source</a></p>
+ * <p><i><b>Average runtime ~0.07 ms</b></i></p>
+ */
 export function run(): number {
     // Formula for number of squares in an l x b grid is
     // sum_n=0^l sum_m=0^b (l - n) * (b - m) = l * (l + 1) * b * (b + 1) / 4

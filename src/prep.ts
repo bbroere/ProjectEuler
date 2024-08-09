@@ -29,8 +29,8 @@ function makeRunFile(): void {
     const allFunctionCalls: string[] = files.map((f: string): number => Number(f.split(".")[0].slice(1)))
         .sort((a: number, b: number): number => a - b)
         .map((n: number): string => {
-        return `    console.log("${n}: ");\n    nFn(${n}, p${n}, false);\n`;
-    });
+            return `    console.log("${n}: ");\n    nFn(${n}, p${n}, false);\n`;
+        });
     content += 'export function runAll(): void {\n' +
         allFunctionCalls.join("") +
         '}\n\n';

@@ -1,7 +1,18 @@
 import {filterUnique, sum} from "../utilities/sequences";
 import {isPandigital} from "../utilities/numbers";
 
-// Average runtime ~105 ms
+/**
+ * <p>We shall say that an $n$-digit number is pandigital if it makes use of all the digits $1$ to $n$ exactly once; for example, the $5$-digit number, $15234$, is $1$ through $5$ pandigital.</p>
+ * 
+ * <p>The product $7254$ is unusual, as the identity, $39 \times 186 = 7254$, containing multiplicand, multiplier, and product is $1$ through $9$ pandigital.</p>
+ * 
+ * <p>Find the sum of all products whose multiplicand/multiplier/product identity can be written as a $1$ through $9$ pandigital.</p>
+ * 
+ * <div class="note">HINT: Some products can be obtained in more than one way so be sure to only include it once in your sum.</div>
+ *
+ * <p>Generated on 2024-08-09 from <a href='https://projecteuler.net/problem=32'>source</a></p>
+ * <p><i><b>Average runtime ~105 ms</b></i></p>
+ */
 export function run(): number {
     // Every part must have at least one digit, so we need to loop to at most 9999999 (7 nines)
     // Also if a * b = x, a has p digits and b has q, than q has at either p+q-1 or p+q digits
