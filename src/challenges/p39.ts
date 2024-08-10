@@ -7,7 +7,7 @@ import {pythagoreanTripletsWithSumBound} from "../utilities/geometry";
  * <p>For which value of $p \le 1000$, is the number of solutions maximised?</p>
  *
  * <p>Generated on 2024-08-09 from <a href='https://projecteuler.net/problem=39'>source</a></p>
- * <p><i><b>Average runtime ~0.35 ms</b></i></p>
+ * <p><i><b>Average runtime ~0.16 ms</b></i></p>
  */
 export function run(): number {
     // Define S_p = { {a,b,c} | a, b, c natural numbers s.t. a^2+b^2=c^2 and a+b+c=p }

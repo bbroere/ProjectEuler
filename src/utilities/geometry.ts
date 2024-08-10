@@ -1,5 +1,6 @@
 import assert from "node:assert";
-import {filterUnique} from "./sequences";
+import {sum} from "./sequences";
+import {gcd} from "./numbers";
 
 /**
  * Based on Euclid's formula for Pythagorean triplets, this function returns the triplet for given n and m
@@ -21,29 +22,21 @@ export function findPythagoreanTriplet(a: number, b: number): number {
 /**
  * Returns all Pythagorean triplets with a sum less than or equal to the given bound
  */
-export function pythagoreanTripletsWithSumBound(bound: number): [number, number, number][] {
-    const triplets: [number, number, number][] = [];
-    for (let n: number = 1; n < bound; n++) {
-        for (let m: number = n + 1; m < bound; m++) {
-            const triplet: [number, number, number] = _euclidPythagoreanTriplet(n, m);
-            const tripletSum: number = triplet.reduce((a: number, b: number) => a + b);
-            if (tripletSum > bound) {
-                break;
+export function pythagoreanTripletsWithSumBound(boundInc: number): [number, number, number][] {
+    const triplets: Set<string> = new Set();
+    const mnBound = Math.floor(Math.sqrt(boundInc / 2));
+    for (let n: number = 1; n <= mnBound; n++) {
+        for (let m: number = n + 1; m <= mnBound; m++) {
+            if (gcd(m, n) == 1) {
+                const triplet: [number, number, number] = _euclidPythagoreanTriplet(n, m);
+                const sortedTriplet: [number, number, number] =
+                    [Math.min(triplet[0], triplet[1]), Math.max(triplet[0], triplet[1]), triplet[2]];
+                const sumTriplet: number = sum(sortedTriplet);
+                const maxMultiplier: number = Math.floor(boundInc / sumTriplet);
+                for (let c = 1; c <= maxMultiplier; c++)
+                    triplets.add(JSON.stringify([sortedTriplet[0] * c, sortedTriplet[1] * c, sortedTriplet[2] * c]));
             }
-            triplets.push(triplet);
         }
     }
-    // We only find non-divisible triplets, so we need to multiply them to get the divisible ones
-    triplets.forEach((triplet: [number, number, number]) => {
-        const tripletSum: number = triplet.reduce((a: number, b: number) => a + b);
-        for (let i: number = 2; i * tripletSum <= bound; i++) {
-            triplets.push(triplet.map((x: number) => x * i) as [number, number, number]);
-        }
-    });
-    // In this process we have made duplicates, so filter them out
-    return filterUnique(
-        triplets.map((t: [number, number, number]) =>
-            t.sort((a: number, b: number) => a - b) as [number, number, number]),
-        (lhs: [number, number, number], rhs: [number, number, number]) => lhs[0] == rhs[0] && lhs[1] == rhs[1] && lhs[2] == rhs[2]
-    );
+    return [...triplets].map((t: string) => JSON.parse(t));
 }
