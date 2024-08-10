@@ -244,7 +244,7 @@ export function partitionNumbers(upperBoundInc: number): bigint[] {
     // We can use the pentagonal number theorem to find the solution
     // p(n) = sum_(k!=0) (-1)^(k-1) * p(n - g(k)) = sum_(k!=0) (-1)^(k-1) * p(n - k(3k-1)/2)
     // where g(k) = k(3k-1)/2 is the k-th pentagonal number (polygonalNumber(5)(k), also works on negatives)
-    // Bote that as soon as (n - k(3k-1)/2) is negative, we can stop the sum as the rest of the terms will be 0
+    // Note that as soon as (n - k(3k-1)/2) is negative, we can stop the sum as the rest of the terms will be 0
 
     // Base cases
     if (upperBoundInc < 0) return [0n];
