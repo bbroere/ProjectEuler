@@ -34,6 +34,12 @@ import assert from "node:assert";
  * <p><i><b>Average runtime ~6.7 ms</b></i></p>
  */
 export function run(): number {
+    // We are going to do this by working out how the game can develop
+    // We start from 00 and basically do turns, determining the probability you will be on square X after Y turns
+    // If we choose the amount of turns high enough, this should converge to the appropriate distribution
+
+    // Chances we throw a given amount
+    // This has been set up for 2 4-sided dice
     const twoDiceChances: Map<number, number> = new Map<number, number>([
         [2, 1 / 16],
         [3, 2 / 16],
@@ -44,10 +50,14 @@ export function run(): number {
         [8, 1 / 16],
     ]);
 
+    // When you throw a double 3 times in a row, you go to jail
+    // This function calculates the chance that your throw is the third double in a row
+    // This has been set up for 2 4-sided dice
     function tripleDoubleJailChance(n: number): number {
-        return [2, 4, 6, 8].includes(n) ? 1 / (4 ** 3) : 0;
+        return (n % 2 == 0) ? 1 / (4 ** 3) : 0;
     }
 
+    // Given x, determines smallest n s.t. 10 * n + 5 > x
     function nextFivePlusMultipleOfTen(x: number): number {
         if (x % 10 < 5)
             return Math.floor(x / 10) * 10 + 5;
@@ -55,28 +65,35 @@ export function run(): number {
             return Math.ceil(x / 10) * 10 + 5;
     }
 
+    // Converts a number to the string interpretation of a square
+    // This could probably be done without, but it's how I've done it :)
     function nToStr(n: number): string {
         return ("0" + n).slice(-2);
     }
 
+    // Creates a map of all cards to a given initial value
+    // Note that the initial is a generator function as we don't want by-reference things to get in the way
     function mapOfAllCards<T>(initial: () => T): Map<string, T> {
         return new Map<string, T>([...numbersWithMaxSize(40).map(n =>
             [nToStr(n - 1), initial()] as [string, T])]);
     }
 
+    // Chances of moving on the Community-Chest (CC) squares
     const ccChanges: Map<string, number> = new Map<string, number>([
         ["00", 1 / 16],
         ["10", 1 / 16]
     ]);
 
+    // Chances of moving on the Chance (CH) squares
     function chChances(from: string): Map<string, number> {
         const fromInt = parseInt(from);
         // Add 40 to not get to a negative square
         const backThree: string = nToStr((fromInt - 3 + 40) % 40);
-        // R's are always on x*10 + 5
+        // R's (Railways) are always on x*10 + 5
         const nextR: string = nToStr(nextFivePlusMultipleOfTen(fromInt) % 40);
-        // Two U's, on 12 and 28
+        // Two U's (Utility), on 12 and 28
         const nextU: string = nToStr((fromInt <= 11 || fromInt >= 28) ? 12 : 28);
+        // This map is independent of the square you are on
         const basisMap: Map<string, number> = new Map<string, number>([
             ["00", 1 / 16], // GO
             ["10", 1 / 16], // JAIL
@@ -85,20 +102,25 @@ export function run(): number {
             ["39", 1 / 16], // H2
             ["05", 1 / 16] // R1
         ]);
+        // Now add the parts that are dependent on the square you end up in
         basisMap.set(backThree, (basisMap.get(backThree) ?? 0) + (1 / 16));
         basisMap.set(nextR, (basisMap.get(nextR) ?? 0) + (2 / 16));
         basisMap.set(nextU, (basisMap.get(nextU) ?? 0) + (1 / 16));
         return basisMap;
     }
 
+    // CC squares are on 2, 17 and 33
     function isCC(s: string): boolean {
         return ["02", "17", "33"].includes(s);
     }
 
+    // CH squares are on 7, 22 and 36
     function isCH(s: string): boolean {
         return ["07", "22", "36"].includes(s);
     }
 
+    // Adds a given chance to a given key in a given map
+    // If the chance was to be added to key 30 (Go to jail), we add the chance to 10 (Jail) instead
     function addChance(chances: Map<string, number>, key: string, chance: number): void {
         assert(parseInt(key) < 40, "addChance");
         if (key != "30")
@@ -107,7 +129,8 @@ export function run(): number {
             chances.set("10", chances.get("10") + chance);
     }
 
-    // It is sufficient to determine the chances to land on each other square from each starting square (including itself), with exception to G2J as the chance to land there is 0 anyway
+    // It is sufficient to determine the chances to land on each other square from each starting square (including itself),
+    // with exception to Go to Jail as the chance to land there is 0 anyway
     const proceedingChances: Map<string, Map<string, number>> = mapOfAllCards(() => mapOfAllCards(() => 0));
     for (let currentNumber = 0; currentNumber < 40; currentNumber++) {
         twoDiceChances.forEach((diceChance, steps) => {
@@ -139,11 +162,10 @@ export function run(): number {
                 addChance(newCurrentChances, endingSquare, currentChance * travelChance);
             });
         });
-
         // 'Save state'
         currentChances = newCurrentChances;
     }
 
     // Sort by probability and concatenate the first three keys
-    return parseInt([...currentChances.entries()].sort((a, b) => b[1] - a[1]).slice(0,3).map(v => v[0]).join(""));
+    return parseInt([...currentChances.entries()].sort((a, b) => b[1] - a[1]).slice(0, 3).map(v => v[0]).join(""));
 }
