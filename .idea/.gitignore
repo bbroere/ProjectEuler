@@ -1,0 +1,7 @@
+# Default ignore all
+*.*
+
+# Not name, icon and ignore
+!.gitignore
+!.name
+!icon.svg
